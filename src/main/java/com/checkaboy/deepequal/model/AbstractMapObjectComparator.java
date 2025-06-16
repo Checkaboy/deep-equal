@@ -1,4 +1,6 @@
-package com.checkaboy.deepequal;
+package com.checkaboy.deepequal.model;
+
+import com.checkaboy.deepequal.model.interf.IComparator;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -8,10 +10,18 @@ import java.util.Set;
 /**
  * @author Taras Shaptala
  */
-public abstract class AbstractObjectEq<O>
-        implements IFieldEq<O>, IObjectEq<O> {
+public abstract class AbstractMapObjectComparator<O>
+        implements Map<String, IComparator<O>> {
 
-    private final Map<String, IFieldEq<O>> fieldEqMap = new HashMap<>();
+    private final Map<String, IComparator<O>> fieldEqMap;
+
+    public AbstractMapObjectComparator() {
+        this(new HashMap<>());
+    }
+
+    public AbstractMapObjectComparator(Map<String, IComparator<O>> fieldComparatorMap) {
+        this.fieldEqMap = fieldComparatorMap;
+    }
 
     @Override
     public int size() {
@@ -34,22 +44,22 @@ public abstract class AbstractObjectEq<O>
     }
 
     @Override
-    public IFieldEq<O> get(Object key) {
+    public IComparator<O> get(Object key) {
         return fieldEqMap.get(key);
     }
 
     @Override
-    public IFieldEq<O> put(String fieldName, IFieldEq<O> eq) {
+    public IComparator<O> put(String fieldName, IComparator<O> eq) {
         return fieldEqMap.put(fieldName, eq);
     }
 
     @Override
-    public IFieldEq<O> remove(Object key) {
+    public IComparator<O> remove(Object key) {
         return fieldEqMap.remove(key);
     }
 
     @Override
-    public void putAll(Map<? extends String, ? extends IFieldEq<O>> m) {
+    public void putAll(Map<? extends String, ? extends IComparator<O>> m) {
         fieldEqMap.putAll(m);
     }
 
@@ -64,12 +74,12 @@ public abstract class AbstractObjectEq<O>
     }
 
     @Override
-    public Collection<IFieldEq<O>> values() {
+    public Collection<IComparator<O>> values() {
         return fieldEqMap.values();
     }
 
     @Override
-    public Set<Entry<String, IFieldEq<O>>> entrySet() {
+    public Set<Entry<String, IComparator<O>>> entrySet() {
         return fieldEqMap.entrySet();
     }
 

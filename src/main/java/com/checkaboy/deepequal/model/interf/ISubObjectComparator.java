@@ -1,4 +1,4 @@
-package com.checkaboy.deepequal;
+package com.checkaboy.deepequal.model.interf;
 
 import java.util.List;
 import java.util.Map;
@@ -6,7 +6,8 @@ import java.util.Map;
 /**
  * @author Taras Shaptala
  */
-public interface IObjectEq<O> extends Map<String, IFieldEq<O>> {
+public interface ISubObjectComparator<O, S>
+        extends IComparator<O>, Map<String, IComparator<S>> {
 
     /**
      * @param fieldName name of the field to compare
@@ -14,7 +15,7 @@ public interface IObjectEq<O> extends Map<String, IFieldEq<O>> {
      * @param second    object being compared
      * @return field comparison value by name
      */
-    boolean fieldEqual(String fieldName, O first, O second);
+    boolean fieldEqual(String fieldName, S first, S second);
 
     /**
      * @param value  to compare with
@@ -22,6 +23,6 @@ public interface IObjectEq<O> extends Map<String, IFieldEq<O>> {
      * @param second object being compared
      * @return names of all fields that match the value
      */
-    List<String> fields(boolean value, O first, O second);
+    List<String> fields(boolean value, S first, S second);
 
 }
