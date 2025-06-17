@@ -1,4 +1,4 @@
-package com.checkaboy.deepequal.model;
+package com.checkaboy.deepequal.model.car;
 
 /**
  * Test model

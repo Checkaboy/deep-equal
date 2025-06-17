@@ -1,6 +1,6 @@
-package com.checkaboy.deepequal.model;
+package com.checkaboy.deepequal.model.single;
 
-import com.checkaboy.deepequal.model.interf.IComparator;
+import com.checkaboy.deepequal.model.single.interf.IComparator;
 
 import java.util.Collection;
 import java.util.HashMap;

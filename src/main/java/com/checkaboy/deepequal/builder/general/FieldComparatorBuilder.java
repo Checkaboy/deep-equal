@@ -3,7 +3,7 @@ package com.checkaboy.deepequal.builder.general;
 import com.checkaboy.deepequal.builder.interf.IFieldComparatorBuilder;
 import com.checkaboy.deepequal.factory.IFieldComparatorFactory;
 import com.checkaboy.deepequal.factory.general.GeneralFieldComparatorFactory;
-import com.checkaboy.deepequal.model.interf.IComparator;
+import com.checkaboy.deepequal.model.single.interf.IComparator;
 
 import java.util.Objects;
 import java.util.function.Function;

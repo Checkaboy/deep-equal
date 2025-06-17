@@ -1,4 +1,4 @@
-package com.checkaboy.deepequal.model.interf;
+package com.checkaboy.deepequal.model.single.interf;
 
 /**
  * @author Taras Shaptala

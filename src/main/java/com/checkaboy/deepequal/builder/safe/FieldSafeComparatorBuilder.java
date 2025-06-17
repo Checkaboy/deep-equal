@@ -1,9 +1,10 @@
 package com.checkaboy.deepequal.builder.safe;
 
-import com.checkaboy.deepequal.model.FieldComparator;
+import com.checkaboy.deepequal.factory.IFieldComparatorFactory;
+import com.checkaboy.deepequal.model.single.FieldComparator;
 import com.checkaboy.deepequal.builder.interf.IFieldComparatorBuilder;
 import com.checkaboy.deepequal.wrapper.NPESafeFunctionWrapper;
-import com.checkaboy.deepequal.model.interf.IComparator;
+import com.checkaboy.deepequal.model.single.interf.IComparator;
 
 import java.util.function.Function;
 
@@ -26,6 +27,11 @@ public class FieldSafeComparatorBuilder<O, V>
     public FieldSafeComparatorBuilder<O, V> setComparator(IComparator<V> comparator) {
         this.comparator = comparator;
         return this;
+    }
+
+    @Override
+    public void setFactory(IFieldComparatorFactory<O, V> factory) {
+
     }
 
     public IComparator<O> build() {

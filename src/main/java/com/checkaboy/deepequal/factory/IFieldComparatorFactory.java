@@ -1,6 +1,6 @@
 package com.checkaboy.deepequal.factory;
 
-import com.checkaboy.deepequal.model.interf.IComparator;
+import com.checkaboy.deepequal.model.single.interf.IComparator;
 
 import java.util.function.Function;
 

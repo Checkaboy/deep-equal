@@ -1,8 +1,8 @@
 package com.checkaboy.deepequal.factory.general;
 
 import com.checkaboy.deepequal.factory.IObjectComparatorFactory;
-import com.checkaboy.deepequal.model.ObjectComparator;
-import com.checkaboy.deepequal.model.interf.IComparator;
+import com.checkaboy.deepequal.model.single.ObjectComparator;
+import com.checkaboy.deepequal.model.single.interf.IComparator;
 
 import java.util.Map;
 

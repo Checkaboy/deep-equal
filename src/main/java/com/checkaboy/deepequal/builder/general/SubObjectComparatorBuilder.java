@@ -3,9 +3,9 @@ package com.checkaboy.deepequal.builder.general;
 import com.checkaboy.deepequal.builder.interf.ISubObjectComparatorBuilder;
 import com.checkaboy.deepequal.factory.ISubObjectComparatorFactory;
 import com.checkaboy.deepequal.factory.general.GeneralSubObjectComparatorFactory;
-import com.checkaboy.deepequal.model.ObjectComparator;
-import com.checkaboy.deepequal.model.interf.IObjectComparator;
-import com.checkaboy.deepequal.model.interf.ISubObjectComparator;
+import com.checkaboy.deepequal.model.single.ObjectComparator;
+import com.checkaboy.deepequal.model.single.interf.IObjectComparator;
+import com.checkaboy.deepequal.model.single.interf.ISubObjectComparator;
 
 import java.util.function.Function;
 

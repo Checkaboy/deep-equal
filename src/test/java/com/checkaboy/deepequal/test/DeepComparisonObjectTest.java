@@ -1,16 +1,16 @@
 package com.checkaboy.deepequal.test;
 
-import com.checkaboy.deepequal.model.FieldComparator;
+import com.checkaboy.deepequal.model.single.FieldComparator;
 import com.checkaboy.deepequal.builder.general.ObjectComparatorBuilder;
 import com.checkaboy.deepequal.builder.general.SubObjectComparatorBuilder;
 import com.checkaboy.deepequal.builder.safe.FieldSafeComparatorBuilder;
 import com.checkaboy.deepequal.builder.safe.SubObjectSafeComparatorBuilder;
 import com.checkaboy.deepequal.wrapper.NPESafeFunctionWrapper;
-import com.checkaboy.deepequal.model.interf.IComparator;
-import com.checkaboy.deepequal.model.Car;
-import com.checkaboy.deepequal.model.ETransmissionType;
-import com.checkaboy.deepequal.model.Engine;
-import com.checkaboy.deepequal.model.Transmission;
+import com.checkaboy.deepequal.model.single.interf.IComparator;
+import com.checkaboy.deepequal.model.car.Car;
+import com.checkaboy.deepequal.model.car.ETransmissionType;
+import com.checkaboy.deepequal.model.car.Engine;
+import com.checkaboy.deepequal.model.car.Transmission;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -19,7 +19,7 @@ import java.util.Objects;
 /**
  * @author Taras Shaptala
  */
-public class DeepEqualTest {
+public class DeepComparisonObjectTest {
 
     @Test
     public void testPrimitiveFieldCompare() {

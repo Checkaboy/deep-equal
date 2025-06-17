@@ -3,8 +3,8 @@ package com.checkaboy.deepequal.builder.general;
 import com.checkaboy.deepequal.builder.interf.IObjectComparatorBuilder;
 import com.checkaboy.deepequal.factory.IObjectComparatorFactory;
 import com.checkaboy.deepequal.factory.general.GeneralObjectComparatorFactory;
-import com.checkaboy.deepequal.model.interf.IComparator;
-import com.checkaboy.deepequal.model.interf.IObjectComparator;
+import com.checkaboy.deepequal.model.single.interf.IComparator;
+import com.checkaboy.deepequal.model.single.interf.IObjectComparator;
 
 import java.util.HashMap;
 import java.util.Map;

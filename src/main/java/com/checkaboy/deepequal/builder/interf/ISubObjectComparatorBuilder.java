@@ -1,7 +1,7 @@
 package com.checkaboy.deepequal.builder.interf;
 
 import com.checkaboy.deepequal.factory.ISubObjectComparatorFactory;
-import com.checkaboy.deepequal.model.interf.IObjectComparator;
+import com.checkaboy.deepequal.model.single.interf.IObjectComparator;
 
 import java.util.function.Function;
 
