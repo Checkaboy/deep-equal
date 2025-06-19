@@ -1,10 +1,12 @@
 package com.checkaboy.deepequal.test;
 
-import com.checkaboy.deepequal.builder.general.ObjectComparatorBuilder;
-import com.checkaboy.deepequal.model.collection.CollectionComparator;
+import com.checkaboy.deepequal.comparator.CollectionComparator;
+import com.checkaboy.deepequal.comparator.FieldComparator;
+import com.checkaboy.deepequal.comparator.ObjectComparator;
+import com.checkaboy.deepequal.comparator.interf.ICollectionComparator;
+import com.checkaboy.deepequal.comparator.interf.IObjectComparator;
 import com.checkaboy.deepequal.model.pet.EAnimal;
 import com.checkaboy.deepequal.model.pet.Pet;
-import com.checkaboy.deepequal.model.single.FieldComparator;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -16,14 +18,14 @@ import java.util.List;
  */
 public class CollectionsComparisonTest {
 
-    private CollectionComparator<List<Pet>, Pet> createComparator() {
+    private ICollectionComparator<List<Pet>, Pet> createComparator() {
+        IObjectComparator<Pet> petComparator = new ObjectComparator<>();
+        petComparator.put("nickname", FieldComparator.simpleFieldComparator(Pet::getNickname));
+        petComparator.put("age", FieldComparator.simpleFieldComparator(Pet::getAge));
+        petComparator.put("animal", FieldComparator.simpleFieldComparator(Pet::getAnimal));
         return new CollectionComparator<>(
                 ArrayList::new,
-                new ObjectComparatorBuilder<Pet>()
-                        .putFieldComparator("nickname", FieldComparator.simpleFieldComparator(Pet::getNickname))
-                        .putFieldComparator("age", FieldComparator.simpleFieldComparator(Pet::getAge))
-                        .putFieldComparator("animal", FieldComparator.simpleFieldComparator(Pet::getAnimal))
-                        .build()
+                petComparator
         );
     }
 
@@ -31,7 +33,7 @@ public class CollectionsComparisonTest {
     public void withoutOrderOfSuccession() {
         List<Pet> pets1 = createFirstList();
         List<Pet> pets2 = createSecondList();
-        CollectionComparator<List<Pet>, Pet> comparator = createComparator();
+        ICollectionComparator<List<Pet>, Pet> comparator = createComparator();
         Assertions.assertTrue(comparator.equal(pets1, pets2));
     }
 
@@ -99,7 +101,7 @@ public class CollectionsComparisonTest {
     public void withoutOrderOfSuccessionAndWithDuplicate() {
         List<Pet> pets1 = createThirdList();
         List<Pet> pets2 = createFourthList();
-        CollectionComparator<List<Pet>, Pet> comparator = createComparator();
+        ICollectionComparator<List<Pet>, Pet> comparator = createComparator();
         Assertions.assertFalse(comparator.equal(pets1, pets2));
     }
 
@@ -183,16 +185,16 @@ public class CollectionsComparisonTest {
     public void leftUnJoin() {
         List<Pet> pets1 = createFivedList();
         List<Pet> pets2 = createSixedList();
-        CollectionComparator<List<Pet>, Pet> comparator = createComparator();
-        System.out.println(comparator.objectsNotContainsInSecondList(pets1, pets2));
+        ICollectionComparator<List<Pet>, Pet> comparator = createComparator();
+        System.out.println(comparator.objectsNotContainsInSecondCollection(pets1, pets2));
     }
 
     @Test
     public void leftUnJoinWithDuplicate() {
         List<Pet> pets1 = createFivedList();
         List<Pet> pets2 = createFourthList();
-        CollectionComparator<List<Pet>, Pet> comparator = createComparator();
-        System.out.println(comparator.objectsNotContainsInSecondList(pets1, pets2));
+        ICollectionComparator<List<Pet>, Pet> comparator = createComparator();
+        System.out.println(comparator.objectsNotContainsInSecondCollection(pets1, pets2));
     }
 
     private List<Pet> createFivedList() {

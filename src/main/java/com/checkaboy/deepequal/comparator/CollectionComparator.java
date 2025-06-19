@@ -1,8 +1,8 @@
-package com.checkaboy.deepequal.model.collection;
+package com.checkaboy.deepequal.comparator;
 
+import com.checkaboy.deepequal.comparator.interf.ICollectionComparator;
+import com.checkaboy.deepequal.comparator.interf.IFieldComparator;
 import com.checkaboy.deepequal.factory.ICollectionFactory;
-import com.checkaboy.deepequal.model.collection.interf.ICollectionComparator;
-import com.checkaboy.deepequal.model.single.interf.IComparator;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -16,9 +16,9 @@ public class CollectionComparator<C extends Collection<V>, V>
         implements ICollectionComparator<C, V> {
 
     protected final ICollectionFactory<C, V> collectionFactory;
-    protected final IComparator<V> comparator;
+    protected final IFieldComparator<V> comparator;
 
-    public CollectionComparator(ICollectionFactory<C, V> collectionFactory, IComparator<V> comparator) {
+    public CollectionComparator(ICollectionFactory<C, V> collectionFactory, IFieldComparator<V> comparator) {
         this.collectionFactory = collectionFactory;
         this.comparator = comparator;
     }
@@ -53,7 +53,7 @@ public class CollectionComparator<C extends Collection<V>, V>
     }
 
     @Override
-    public C objectsNotContainsInSecondList(C first, C second) {
+    public C objectsNotContainsInSecondCollection(C first, C second) {
         C firstDump = collectionFactory.createNew();
         firstDump.addAll(first);
 

@@ -1,7 +1,6 @@
 package com.checkaboy.deepequal.builder.interf;
 
-import com.checkaboy.deepequal.factory.IObjectComparatorFactory;
-import com.checkaboy.deepequal.model.single.interf.IComparator;
+import com.checkaboy.deepequal.comparator.interf.IFieldComparator;
 
 import java.util.Map;
 
@@ -10,12 +9,10 @@ import java.util.Map;
  */
 public interface IObjectComparatorBuilder<O> {
 
-    IObjectComparatorBuilder<O> setFieldComparatorMap(Map<String, IComparator<O>> fieldEqMap);
+    IObjectComparatorBuilder<O> setFieldComparators(Map<String, IFieldComparator<O>> fieldComparatorMap);
 
-    IObjectComparatorBuilder<O> putFieldComparator(String fieldName, IComparator<O> comparator);
+    IObjectComparatorBuilder<O> putFieldComparator(String fieldName, IFieldComparator<O> fieldComparator);
 
-    IObjectComparatorBuilder<O> putAllFieldComparators(Map<String, IComparator<O>> fieldEqMap);
-
-    void setFactory(IObjectComparatorFactory<O> factory);
+    IObjectComparatorBuilder<O> putAllFieldComparators(Map<String, IFieldComparator<O>> fieldComparatorMap);
 
 }

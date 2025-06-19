@@ -1,9 +1,9 @@
-package com.checkaboy.deepequal.model.single.interf;
+package com.checkaboy.deepequal.comparator.interf;
 
 /**
  * @author Taras Shaptala
  */
-public interface IComparator<O> {
+public interface IFieldComparator<O> {
 
     /**
      * Basic comparison method

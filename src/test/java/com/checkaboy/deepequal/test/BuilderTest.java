@@ -1,7 +1,8 @@
 package com.checkaboy.deepequal.test;
 
+import com.checkaboy.deepequal.builder.FieldComparatorBuilder;
+import com.checkaboy.deepequal.builder.ObjectComparatorBuilder;
 import com.checkaboy.deepequal.comparator.FieldComparator;
-import com.checkaboy.deepequal.comparator.ObjectComparator;
 import com.checkaboy.deepequal.comparator.interf.IFieldComparator;
 import com.checkaboy.deepequal.comparator.interf.IObjectComparator;
 import com.checkaboy.deepequal.model.car.Car;
@@ -16,7 +17,7 @@ import java.util.Objects;
 /**
  * @author Taras Shaptala
  */
-public class DeepComparisonObjectTest {
+public class BuilderTest {
 
     @Test
     public void testPrimitiveFieldCompare() {
@@ -104,32 +105,29 @@ public class DeepComparisonObjectTest {
         return car;
     }
 
-    private IFieldComparator<Car> createCarComparator() {
-        IObjectComparator<Car> carComparator = new ObjectComparator<>();
+    private IObjectComparator<Car> createCarComparator() {
+        ObjectComparatorBuilder<Car> comparatorBuilder = new ObjectComparatorBuilder<>(Car.class)
+                .putFieldComparator("carBrand", FieldComparator.simpleFieldComparator(Car::getCarBrand))
+                .putFieldComparator("model", FieldComparator.simpleFieldComparator(Car::getModel))
+                .putFieldComparator("color", FieldComparator.simpleFieldComparator(Car::getColor))
+                .putFieldComparator("doorCount", FieldComparator.simpleFieldComparator(Car::getDoorCount))
+                .putFieldComparator("engine", new FieldComparatorBuilder<Car, Engine>(Car.class)
+                        .setExtractor(Car::getEngine)
+                        .setComparator(new ObjectComparatorBuilder<>(Engine.class)
+                                .putFieldComparator("horsePower", FieldComparator.simpleFieldComparator(Engine::getHorsePower))
+                                .putFieldComparator("volume", FieldComparator.simpleFieldComparator(Engine::getVolume))
+                                .putFieldComparator("countCylinder", FieldComparator.simpleFieldComparator(Engine::getCountCylinder))
+                                .build())
+                        .build())
+                .putFieldComparator("transmission", new FieldComparatorBuilder<Car, Transmission>(Car.class)
+                        .setExtractor(Car::getTransmission)
+                        .setComparator(new ObjectComparatorBuilder<>(Transmission.class)
+                                .putFieldComparator("countSteps", FieldComparator.simpleFieldComparator(Transmission::getCountSteps))
+                                .putFieldComparator("transmissionType", FieldComparator.simpleFieldComparator(Transmission::getTransmissionType))
+                                .build())
+                        .build());
 
-        carComparator.put("carBrand", FieldComparator.simpleFieldComparator(Car::getCarBrand));
-        carComparator.put("model", FieldComparator.simpleFieldComparator(Car::getModel));
-        carComparator.put("color", FieldComparator.simpleFieldComparator(Car::getColor));
-        carComparator.put("doorCount", FieldComparator.simpleFieldComparator(Car::getDoorCount));
-
-        {
-            IObjectComparator<Engine> engineComparator = new ObjectComparator<>();
-            engineComparator.put("horsePower", FieldComparator.simpleFieldComparator(Engine::getHorsePower));
-            engineComparator.put("volume", FieldComparator.simpleFieldComparator(Engine::getVolume));
-            engineComparator.put("countCylinder", FieldComparator.simpleFieldComparator(Engine::getCountCylinder));
-            FieldComparator<Car, Engine> comparator = new FieldComparator<>(Car::getEngine, engineComparator);
-            carComparator.put("engine", comparator);
-        }
-
-        {
-            IObjectComparator<Transmission> transmissionComparator = new ObjectComparator<>();
-            transmissionComparator.put("countSteps", FieldComparator.simpleFieldComparator(Transmission::getCountSteps));
-            transmissionComparator.put("transmissionType", FieldComparator.simpleFieldComparator(Transmission::getTransmissionType));
-            FieldComparator<Car, Transmission> comparator = new FieldComparator<>(Car::getTransmission, transmissionComparator);
-            carComparator.put("transmissionType", comparator);
-        }
-
-        return carComparator;
+        return comparatorBuilder.build();
     }
 
 }

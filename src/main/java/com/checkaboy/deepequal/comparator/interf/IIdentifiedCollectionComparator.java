@@ -1,4 +1,4 @@
-package com.checkaboy.deepequal.model.collection.interf;
+package com.checkaboy.deepequal.comparator.interf;
 
 import java.util.Collection;
 
@@ -8,6 +8,6 @@ import java.util.Collection;
 public interface IIdentifiedCollectionComparator<C extends Collection<V>, V>
         extends ICollectionComparator<C, V> {
 
-    C objectsNotContainsInSecondListButEqualsByIdentifier(C first, C second);
+    C objectsNotContainsInSecondCollectionButEqualsByIdentifier(C first, C second);
 
 }
