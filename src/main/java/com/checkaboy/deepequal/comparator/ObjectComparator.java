@@ -95,6 +95,8 @@ public class ObjectComparator<O>
 
     @Override
     public boolean fieldEqual(String fieldName, O first, O second) {
+        IFieldComparator<O> fieldComparator = fieldComparatorMap.get(fieldName);
+        if (fieldComparator == null) return true;
         return fieldComparatorMap.get(fieldName).equal(first, second);
     }
 
