@@ -26,6 +26,8 @@ public class ObjectComparator<O>
 
     @Override
     public boolean equal(O first, O second) {
+        //TODO Add logic to compare subclasses. If the first or second subobject represented has all fields equal
+        // to NULL, and the other subobject is also equal to NULL. They are equal now.
         for (Entry<String, IFieldComparator<O>> entry : entrySet()) {
             if (!entry.getValue().equal(first, second))
                 return false;
