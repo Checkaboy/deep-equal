@@ -4,11 +4,11 @@ import com.checkaboy.deepequal.builder.interf.ICollectionComparatorBuilder;
 import com.checkaboy.deepequal.comparator.CollectionComparator;
 import com.checkaboy.deepequal.comparator.interf.ICollectionComparator;
 import com.checkaboy.deepequal.comparator.interf.IFieldComparator;
-import com.checkaboy.deepequal.factory.ICollectionFactory;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.function.Supplier;
 
 /**
  * @author Taras Shaptala
@@ -17,7 +17,7 @@ public class ListComparatorBuilder<V>
         implements ICollectionComparatorBuilder<List<V>, V> {
 
     private final Class<V> type;
-    private ICollectionFactory<List<V>, V> collectionFactory = ArrayList::new;
+    private Supplier<List<V>> constructor = ArrayList::new;
     private IFieldComparator<V> comparator = Objects::equals;
 
     public ListComparatorBuilder(Class<V> type) {
@@ -25,8 +25,8 @@ public class ListComparatorBuilder<V>
     }
 
     @Override
-    public ListComparatorBuilder<V> setCollectionFactory(ICollectionFactory<List<V>, V> collectionFactory) {
-        this.collectionFactory = collectionFactory;
+    public ListComparatorBuilder<V> setConstructor(Supplier<List<V>> constructor) {
+        this.constructor = constructor;
         return this;
     }
 
@@ -37,7 +37,7 @@ public class ListComparatorBuilder<V>
     }
 
     public ICollectionComparator<List<V>, V> build() {
-        return new CollectionComparator<>(collectionFactory, comparator);
+        return new CollectionComparator<>(constructor, comparator);
     }
 
     public Class<V> getType() {

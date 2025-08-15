@@ -3,11 +3,11 @@ package com.checkaboy.deepequal.builder;
 import com.checkaboy.deepequal.builder.interf.IIdentifiedCollectionComparatorBuilder;
 import com.checkaboy.deepequal.comparator.IdentifiedCollectionComparator;
 import com.checkaboy.deepequal.comparator.interf.IFieldComparator;
-import com.checkaboy.deepequal.factory.ICollectionFactory;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.function.Supplier;
 
 /**
  * @author Taras Shaptala
@@ -16,7 +16,7 @@ public class IdentifiedListComparatorBuilder<V>
         implements IIdentifiedCollectionComparatorBuilder<List<V>, V> {
 
     private final Class<V> type;
-    private ICollectionFactory<List<V>, V> collectionFactory = ArrayList::new;
+    private Supplier<List<V>> constructor = ArrayList::new;
     private IFieldComparator<V> identifierComparator = Objects::equals;
     private IFieldComparator<V> comparator = Objects::equals;
 
@@ -25,14 +25,14 @@ public class IdentifiedListComparatorBuilder<V>
     }
 
     @Override
-    public IdentifiedListComparatorBuilder<V> setCollectionFactory(ICollectionFactory<List<V>, V> collectionFactory) {
-        this.collectionFactory = collectionFactory;
+    public IdentifiedListComparatorBuilder<V> setIdentifierComparator(IFieldComparator<V> identifierComparator) {
+        this.identifierComparator = identifierComparator;
         return this;
     }
 
     @Override
-    public IdentifiedListComparatorBuilder<V> setIdentifierComparator(IFieldComparator<V> identifierComparator) {
-        this.identifierComparator = identifierComparator;
+    public IdentifiedListComparatorBuilder<V> setConstructor(Supplier<List<V>> constructor) {
+        this.constructor = constructor;
         return this;
     }
 
@@ -43,7 +43,7 @@ public class IdentifiedListComparatorBuilder<V>
     }
 
     public IdentifiedCollectionComparator<List<V>, V> build() {
-        return new IdentifiedCollectionComparator<>(collectionFactory, identifierComparator, comparator);
+        return new IdentifiedCollectionComparator<>(constructor, identifierComparator, comparator);
     }
 
     public Class<V> getType() {

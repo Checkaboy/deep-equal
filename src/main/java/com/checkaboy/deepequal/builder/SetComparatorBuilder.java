@@ -4,11 +4,11 @@ import com.checkaboy.deepequal.builder.interf.ICollectionComparatorBuilder;
 import com.checkaboy.deepequal.comparator.CollectionComparator;
 import com.checkaboy.deepequal.comparator.interf.ICollectionComparator;
 import com.checkaboy.deepequal.comparator.interf.IFieldComparator;
-import com.checkaboy.deepequal.factory.ICollectionFactory;
 
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Supplier;
 
 /**
  * @author Taras Shaptala
@@ -17,7 +17,7 @@ public class SetComparatorBuilder<V>
         implements ICollectionComparatorBuilder<Set<V>, V> {
 
     private final Class<V> type;
-    private ICollectionFactory<Set<V>, V> collectionFactory = HashSet::new;
+    private Supplier<Set<V>> constructor = HashSet::new;
     private IFieldComparator<V> comparator = Objects::equals;
 
     public SetComparatorBuilder(Class<V> type) {
@@ -25,8 +25,8 @@ public class SetComparatorBuilder<V>
     }
 
     @Override
-    public SetComparatorBuilder<V> setCollectionFactory(ICollectionFactory<Set<V>, V> collectionFactory) {
-        this.collectionFactory = collectionFactory;
+    public SetComparatorBuilder<V> setConstructor(Supplier<Set<V>> constructor) {
+        this.constructor = constructor;
         return this;
     }
 
@@ -37,7 +37,7 @@ public class SetComparatorBuilder<V>
     }
 
     public ICollectionComparator<Set<V>, V> build() {
-        return new CollectionComparator<>(collectionFactory, comparator);
+        return new CollectionComparator<>(constructor, comparator);
     }
 
     public Class<V> getType() {

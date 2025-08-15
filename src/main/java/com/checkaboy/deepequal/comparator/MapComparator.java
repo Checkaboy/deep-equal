@@ -2,9 +2,9 @@ package com.checkaboy.deepequal.comparator;
 
 import com.checkaboy.deepequal.comparator.interf.IFieldComparator;
 import com.checkaboy.deepequal.comparator.interf.IMapComparator;
-import com.checkaboy.deepequal.factory.IMapFactory;
 
 import java.util.Map;
+import java.util.function.Supplier;
 
 /**
  * @author Taras Shaptala
@@ -12,11 +12,11 @@ import java.util.Map;
 public class MapComparator<M extends Map<K, V>, K, V>
         implements IMapComparator<M, K, V> {
 
-    protected final IMapFactory<M, K, V> mapFactory;
+    protected final Supplier<M> constructor;
     protected final IFieldComparator<V> comparator;
 
-    public MapComparator(IMapFactory<M, K, V> mapFactory, IFieldComparator<V> comparator) {
-        this.mapFactory = mapFactory;
+    public MapComparator(Supplier<M> constructor, IFieldComparator<V> comparator) {
+        this.constructor = constructor;
         this.comparator = comparator;
     }
 
@@ -40,7 +40,7 @@ public class MapComparator<M extends Map<K, V>, K, V>
 
     @Override
     public M objectsNotContainsInSecondMap(M first, M second) {
-        M map = mapFactory.createNew();
+        M map = constructor.get();
 
         if (first != null && second != null) {
             for (Map.Entry<K, V> firstEntry : first.entrySet()) {
@@ -56,7 +56,7 @@ public class MapComparator<M extends Map<K, V>, K, V>
 
     @Override
     public M objectsNotContainsInSecondMapButEqualsByKey(M first, M second) {
-        M map = mapFactory.createNew();
+        M map = constructor.get();
 
         if (first != null && second != null) {
             for (Map.Entry<K, V> firstEntry : first.entrySet()) {

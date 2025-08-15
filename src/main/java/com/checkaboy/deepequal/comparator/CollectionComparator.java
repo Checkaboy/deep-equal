@@ -2,12 +2,12 @@ package com.checkaboy.deepequal.comparator;
 
 import com.checkaboy.deepequal.comparator.interf.ICollectionComparator;
 import com.checkaboy.deepequal.comparator.interf.IFieldComparator;
-import com.checkaboy.deepequal.factory.ICollectionFactory;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
+import java.util.function.Supplier;
 
 /**
  * @author Taras Shaptala
@@ -15,11 +15,11 @@ import java.util.List;
 public class CollectionComparator<C extends Collection<V>, V>
         implements ICollectionComparator<C, V> {
 
-    protected final ICollectionFactory<C, V> collectionFactory;
+    protected final Supplier<C> constructor;
     protected final IFieldComparator<V> comparator;
 
-    public CollectionComparator(ICollectionFactory<C, V> collectionFactory, IFieldComparator<V> comparator) {
-        this.collectionFactory = collectionFactory;
+    public CollectionComparator(Supplier<C> constructor, IFieldComparator<V> comparator) {
+        this.constructor = constructor;
         this.comparator = comparator;
     }
 
@@ -54,7 +54,7 @@ public class CollectionComparator<C extends Collection<V>, V>
 
     @Override
     public C objectsNotContainsInSecondCollection(C first, C second) {
-        C firstDump = collectionFactory.createNew();
+        C firstDump = constructor.get();
         firstDump.addAll(first);
 
         for (V secondValue : second) {
