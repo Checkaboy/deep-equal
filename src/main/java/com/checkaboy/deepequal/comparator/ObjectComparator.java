@@ -12,16 +12,22 @@ import java.util.Set;
  * @author Taras Shaptala
  */
 public class ObjectComparator<O>
+        extends HashMap<String, IFieldComparator<O>>
         implements IObjectComparator<O> {
 
-    private final Map<String, IFieldComparator<O>> fieldComparatorMap;
-
-    public ObjectComparator() {
-        this(new HashMap<>());
+    public ObjectComparator(int initialCapacity, float loadFactor) {
+        super(initialCapacity, loadFactor);
     }
 
-    public ObjectComparator(Map<String, IFieldComparator<O>> fieldComparatorMap) {
-        this.fieldComparatorMap = fieldComparatorMap;
+    public ObjectComparator(int initialCapacity) {
+        super(initialCapacity);
+    }
+
+    public ObjectComparator() {
+    }
+
+    public ObjectComparator(Map<? extends String, ? extends IFieldComparator<O>> m) {
+        super(m);
     }
 
     @Override
@@ -36,70 +42,10 @@ public class ObjectComparator<O>
     }
 
     @Override
-    public int size() {
-        return fieldComparatorMap.size();
-    }
-
-    @Override
-    public boolean isEmpty() {
-        return fieldComparatorMap.isEmpty();
-    }
-
-    @Override
-    public boolean containsKey(Object key) {
-        return fieldComparatorMap.containsKey(key);
-    }
-
-    @Override
-    public boolean containsValue(Object value) {
-        return fieldComparatorMap.containsValue(value);
-    }
-
-    @Override
-    public IFieldComparator<O> get(Object key) {
-        return fieldComparatorMap.get(key);
-    }
-
-    @Override
-    public IFieldComparator<O> put(String fieldName, IFieldComparator<O> comparator) {
-        return fieldComparatorMap.put(fieldName, comparator);
-    }
-
-    @Override
-    public IFieldComparator<O> remove(Object key) {
-        return fieldComparatorMap.remove(key);
-    }
-
-    @Override
-    public void putAll(Map<? extends String, ? extends IFieldComparator<O>> m) {
-        fieldComparatorMap.putAll(m);
-    }
-
-    @Override
-    public void clear() {
-        fieldComparatorMap.clear();
-    }
-
-    @Override
-    public Set<String> keySet() {
-        return fieldComparatorMap.keySet();
-    }
-
-    @Override
-    public Collection<IFieldComparator<O>> values() {
-        return fieldComparatorMap.values();
-    }
-
-    @Override
-    public Set<Entry<String, IFieldComparator<O>>> entrySet() {
-        return fieldComparatorMap.entrySet();
-    }
-
-    @Override
     public boolean fieldEqual(String fieldName, O first, O second) {
-        IFieldComparator<O> fieldComparator = fieldComparatorMap.get(fieldName);
+        IFieldComparator<O> fieldComparator = get(fieldName);
         if (fieldComparator == null) return true;
-        return fieldComparatorMap.get(fieldName).equal(first, second);
+        return fieldComparator.equal(first, second);
     }
 
 }

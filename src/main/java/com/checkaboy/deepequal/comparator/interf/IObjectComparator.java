@@ -16,4 +16,8 @@ public interface IObjectComparator<O>
      */
     boolean fieldEqual(String fieldName, O first, O second);
 
+    /*
+    TODO list of non-matching fields
+     */
+
 }
