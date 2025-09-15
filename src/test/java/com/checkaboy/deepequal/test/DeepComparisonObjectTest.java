@@ -1,15 +1,15 @@
 package com.checkaboy.deepequal.test;
 
-import com.checkaboy.deepequal.comparator.FieldComparator;
-import com.checkaboy.deepequal.comparator.ObjectComparator;
-import com.checkaboy.deepequal.comparator.interf.IFieldComparator;
-import com.checkaboy.deepequal.comparator.interf.IObjectComparator;
+import com.checkaboy.deepequal.comparator.model.FieldComparator;
+import com.checkaboy.deepequal.comparator.model.ObjectComparator;
+import com.checkaboy.deepequal.comparator.model.interf.IFieldComparator;
+import com.checkaboy.deepequal.comparator.model.interf.IObjectComparator;
 import com.checkaboy.deepequal.model.car.Car;
 import com.checkaboy.deepequal.model.car.ETransmissionType;
 import com.checkaboy.deepequal.model.car.Engine;
 import com.checkaboy.deepequal.model.car.Transmission;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
+import org.junit.Assert;
+import org.junit.Test;
 
 import java.util.Objects;
 
@@ -32,31 +32,31 @@ public class DeepComparisonObjectTest {
         carMercedesAMG63.setCarBrand("Mercedes");
         carMercedesAMG63.setModel("AMG 63");
 
-        FieldComparator<Car, String> fieldComparator = new FieldComparator<>(Car::getCarBrand, Objects::equals);
-        Assertions.assertTrue(fieldComparator.equal(carBmvI3, carBmvI8));
-        Assertions.assertFalse(fieldComparator.equal(carBmvI3, carMercedesAMG63));
+        FieldComparator<Car, String, Car, String> fieldComparator = new FieldComparator<>(Car::getCarBrand, Car::getCarBrand, Objects::equals);
+        Assert.assertTrue(fieldComparator.equal(carBmvI3, carBmvI8));
+        Assert.assertFalse(fieldComparator.equal(carBmvI3, carMercedesAMG63));
     }
 
     @Test
     public void testObjectEqual() {
-        IFieldComparator<Car> objectComparator = createCarComparator();
+        IFieldComparator<Car, Car> objectComparator = createCarComparator();
 
         Car carBmvI3 = createBmvI3();
         Car carBmvX5M = createBmwX5M();
 
-        Assertions.assertFalse(objectComparator.equal(carBmvI3, carBmvX5M));
+        Assert.assertFalse(objectComparator.equal(carBmvI3, carBmvX5M));
     }
 
     @Test
     public void testObjectEqualWithNPE() {
-        IFieldComparator<Car> objectComparator = createCarComparator();
+        IFieldComparator<Car, Car> objectComparator = createCarComparator();
 
         Car carBmvI3 = createBmvI3();
         Car carBmvX5M = createBmwX5M();
         carBmvX5M.setTransmission(null);
         carBmvX5M.setEngine(null);
 
-        Assertions.assertFalse(objectComparator.equal(carBmvI3, carBmvX5M));
+        Assert.assertFalse(objectComparator.equal(carBmvI3, carBmvX5M));
     }
 
     private Car createBmvI3() {
@@ -104,8 +104,8 @@ public class DeepComparisonObjectTest {
         return car;
     }
 
-    private IFieldComparator<Car> createCarComparator() {
-        IObjectComparator<Car> carComparator = new ObjectComparator<>();
+    private IFieldComparator<Car, Car> createCarComparator() {
+        IObjectComparator<Car, Car> carComparator = new ObjectComparator<>();
 
         carComparator.put("carBrand", FieldComparator.simpleFieldComparator(Car::getCarBrand));
         carComparator.put("model", FieldComparator.simpleFieldComparator(Car::getModel));
@@ -113,19 +113,19 @@ public class DeepComparisonObjectTest {
         carComparator.put("doorCount", FieldComparator.simpleFieldComparator(Car::getDoorCount));
 
         {
-            IObjectComparator<Engine> engineComparator = new ObjectComparator<>();
+            IObjectComparator<Engine, Engine> engineComparator = new ObjectComparator<>();
             engineComparator.put("horsePower", FieldComparator.simpleFieldComparator(Engine::getHorsePower));
             engineComparator.put("volume", FieldComparator.simpleFieldComparator(Engine::getVolume));
             engineComparator.put("countCylinder", FieldComparator.simpleFieldComparator(Engine::getCountCylinder));
-            FieldComparator<Car, Engine> comparator = new FieldComparator<>(Car::getEngine, engineComparator);
+            FieldComparator<Car, Engine, Car, Engine> comparator = new FieldComparator<>(Car::getEngine, Car::getEngine, engineComparator);
             carComparator.put("engine", comparator);
         }
 
         {
-            IObjectComparator<Transmission> transmissionComparator = new ObjectComparator<>();
+            IObjectComparator<Transmission, Transmission> transmissionComparator = new ObjectComparator<>();
             transmissionComparator.put("countSteps", FieldComparator.simpleFieldComparator(Transmission::getCountSteps));
             transmissionComparator.put("transmissionType", FieldComparator.simpleFieldComparator(Transmission::getTransmissionType));
-            FieldComparator<Car, Transmission> comparator = new FieldComparator<>(Car::getTransmission, transmissionComparator);
+            FieldComparator<Car, Transmission, Car, Transmission> comparator = new FieldComparator<>(Car::getTransmission, Car::getTransmission, transmissionComparator);
             carComparator.put("transmissionType", comparator);
         }
 

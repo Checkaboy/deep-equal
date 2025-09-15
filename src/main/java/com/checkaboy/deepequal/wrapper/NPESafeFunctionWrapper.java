@@ -5,6 +5,7 @@ import java.util.function.Function;
 /**
  * @author Taras Shaptala
  */
+//TODO Move to util module
 public class NPESafeFunctionWrapper<O, V>
         implements Function<O, V> {
 

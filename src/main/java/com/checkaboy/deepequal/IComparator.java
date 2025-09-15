@@ -3,15 +3,16 @@ package com.checkaboy.deepequal;
 /**
  * @author Taras Shaptala
  */
-public interface IComparator<O> {
+@FunctionalInterface
+public interface IComparator<S, T> {
 
     /**
      * Basic comparison method
      *
-     * @param first  object being compared
-     * @param second object being compared
+     * @param source  object being compared
+     * @param target object being compared
      * @return equal or not
      */
-    boolean equal(O first, O second);
+    boolean equal(S source, T target);
 
 }
