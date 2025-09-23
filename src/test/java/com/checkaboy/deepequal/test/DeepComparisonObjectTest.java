@@ -32,9 +32,9 @@ public class DeepComparisonObjectTest {
         carMercedesAMG63.setCarBrand("Mercedes");
         carMercedesAMG63.setModel("AMG 63");
 
-        FieldComparator<Car, String, Car, String> fieldComparator = new FieldComparator<>(Car::getCarBrand, Car::getCarBrand, Objects::equals);
-        Assert.assertTrue(fieldComparator.equal(carBmvI3, carBmvI8));
-        Assert.assertFalse(fieldComparator.equal(carBmvI3, carMercedesAMG63));
+        FieldComparator<Car, String, Car, String> fieldComparator = new FieldComparator<>(Car::getCarBrand, Car::getCarBrand, (comparisonContext, source, target) -> Objects.equals(source, target));
+        Assert.assertTrue(fieldComparator.compare(null, carBmvI3, carBmvI8));
+        Assert.assertFalse(fieldComparator.compare(null, carBmvI3, carMercedesAMG63));
     }
 
     @Test
@@ -44,7 +44,7 @@ public class DeepComparisonObjectTest {
         Car carBmvI3 = createBmvI3();
         Car carBmvX5M = createBmwX5M();
 
-        Assert.assertFalse(objectComparator.equal(carBmvI3, carBmvX5M));
+        Assert.assertFalse(objectComparator.compare(null, carBmvI3, carBmvX5M));
     }
 
     @Test
@@ -56,7 +56,7 @@ public class DeepComparisonObjectTest {
         carBmvX5M.setTransmission(null);
         carBmvX5M.setEngine(null);
 
-        Assert.assertFalse(objectComparator.equal(carBmvI3, carBmvX5M));
+        Assert.assertFalse(objectComparator.compare(null, carBmvI3, carBmvX5M));
     }
 
     private Car createBmvI3() {

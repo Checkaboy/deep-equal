@@ -2,6 +2,7 @@ package com.checkaboy.deepequal.comparator.model;
 
 import com.checkaboy.deepequal.comparator.model.interf.IFieldComparator;
 import com.checkaboy.deepequal.comparator.model.interf.IIdentifiedCollectionComparator;
+import com.checkaboy.deepequal.context.cache.IComparisonContext;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -22,14 +23,14 @@ public class IdentifiedCollectionComparator<SC extends Collection<SV>, SV, TC ex
     }
 
     @Override
-    public boolean equal(SC source, TC target) {
+    public boolean compare(IComparisonContext comparisonContext, SC source, TC target) {
         if (source != null && target != null) {
             if (source.size() != target.size())
                 return false;
 
             for (SV sourceValue : source) {
-                TV find = findObjectsByIdentificationComparator(sourceValue, target);
-                if (!comparator.equal(sourceValue, find))
+                TV find = findObjectsByIdentificationComparator(comparisonContext, sourceValue, target);
+                if (!comparator.compare(comparisonContext, sourceValue, find))
                     return false;
             }
 
@@ -39,11 +40,11 @@ public class IdentifiedCollectionComparator<SC extends Collection<SV>, SV, TC ex
         return source == null && target == null;
     }
 
-    protected TV findObjectsByIdentificationComparator(SV object, Collection<TV> collection) {
+    protected TV findObjectsByIdentificationComparator(IComparisonContext comparisonContext, SV object, Collection<TV> collection) {
         List<TV> find = new ArrayList<>();
 
         for (TV secondValue : collection) {
-            if (identifierComparator.equal(object, secondValue))
+            if (identifierComparator.compare(comparisonContext, object, secondValue))
                 find.add(secondValue);
         }
 

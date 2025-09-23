@@ -17,7 +17,7 @@ public class FieldComparatorBuilder<SO, SV, TO, TV>
 
     private Function<SO, SV> sourceExtractor = o -> null;
     private Function<TO, TV> targetExtractor = o -> null;
-    private IFieldComparator<SV, TV> comparator = Objects::equals;
+    private IFieldComparator<SV, TV> comparator = (comparisonContext, source, target) -> Objects.equals(source, target);
 
     public FieldComparatorBuilder(Class<SO> sourceClass, Class<TO> targetClass) {
         super(targetClass);

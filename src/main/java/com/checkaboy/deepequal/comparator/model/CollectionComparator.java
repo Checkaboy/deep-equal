@@ -2,6 +2,7 @@ package com.checkaboy.deepequal.comparator.model;
 
 import com.checkaboy.deepequal.comparator.model.interf.ICollectionComparator;
 import com.checkaboy.deepequal.comparator.model.interf.IFieldComparator;
+import com.checkaboy.deepequal.context.cache.IComparisonContext;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -14,16 +15,14 @@ import java.util.List;
 public class CollectionComparator<SC extends Collection<SV>, SV, TC extends Collection<TV>, TV>
         implements ICollectionComparator<SC, SV, TC, TV> {
 
-//    protected final Supplier<C> constructor;
     protected final IFieldComparator<SV, TV> comparator;
 
-    public CollectionComparator(/*Supplier<C> constructor, */IFieldComparator<SV, TV> comparator) {
-//        this.constructor = constructor;
+    public CollectionComparator(IFieldComparator<SV, TV> comparator) {
         this.comparator = comparator;
     }
 
     @Override
-    public boolean equal(SC source, TC target) {
+    public boolean compare(IComparisonContext comparisonContext, SC source, TC target) {
         if (source != null && target != null) {
             if (source.size() != target.size())
                 return false;
@@ -36,7 +35,7 @@ public class CollectionComparator<SC extends Collection<SV>, SV, TC extends Coll
                 Iterator<TV> iterator = secondDump.iterator();
                 while (iterator.hasNext()) {
                     TV secondValue = iterator.next();
-                    if (comparator.equal(firstValue, secondValue)) {
+                    if (comparator.compare(comparisonContext, firstValue, secondValue)) {
                         iterator.remove();
                         matched = true;
                         break;

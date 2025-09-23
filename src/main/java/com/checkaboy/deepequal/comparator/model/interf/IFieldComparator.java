@@ -1,7 +1,5 @@
 package com.checkaboy.deepequal.comparator.model.interf;
 
-import com.checkaboy.deepequal.IComparator;
-
 /**
  * @author Taras Shaptala
  */

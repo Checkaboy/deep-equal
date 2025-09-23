@@ -33,7 +33,7 @@ public class CollectionsComparisonTest {
         List<Pet> pets1 = createFirstList();
         List<Pet> pets2 = createSecondList();
         ICollectionComparator<List<Pet>, Pet, List<Pet>, Pet> comparator = createComparator();
-        Assert.assertTrue(comparator.equal(pets1, pets2));
+        Assert.assertTrue(comparator.compare(null, pets1, pets2));
     }
 
     private List<Pet> createFirstList() {
@@ -101,7 +101,7 @@ public class CollectionsComparisonTest {
         List<Pet> pets1 = createThirdList();
         List<Pet> pets2 = createFourthList();
         ICollectionComparator<List<Pet>, Pet, List<Pet>, Pet> comparator = createComparator();
-        Assert.assertFalse(comparator.equal(pets1, pets2));
+        Assert.assertFalse(comparator.compare(null, pets1, pets2));
     }
 
     private List<Pet> createThirdList() {

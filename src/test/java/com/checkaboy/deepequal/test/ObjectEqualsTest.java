@@ -4,6 +4,9 @@ import com.checkaboy.deepequal.comparator.model.CollectionComparator;
 import com.checkaboy.deepequal.comparator.model.FieldComparator;
 import com.checkaboy.deepequal.comparator.model.ObjectComparator;
 import com.checkaboy.deepequal.comparator.model.interf.IObjectComparator;
+import com.checkaboy.deepequal.comparator.transaction.ComparisonTransaction;
+import com.checkaboy.deepequal.comparator.transaction.IComparisonTransaction;
+import com.checkaboy.deepequal.context.cache.ComparisonContext;
 import com.checkaboy.deepequal.model.book.dto.AuthorDto;
 import com.checkaboy.deepequal.model.book.dto.BookDto;
 import org.junit.Test;
@@ -48,7 +51,9 @@ public class ObjectEqualsTest {
         authorDto2.setBooks(createBooks());
         authorDto2.getBooks().forEach(bookDto -> bookDto.setAuthor(authorDto2));
 
-        System.out.println(authorComparator.equal(authorDto1, authorDto2));
+        IComparisonTransaction<AuthorDto, AuthorDto> transaction = new ComparisonTransaction<>(authorComparator, ComparisonContext::new);
+
+        System.out.println(transaction.compare(authorDto1, authorDto2));
     }
 
     public AuthorDto createAuthor() {

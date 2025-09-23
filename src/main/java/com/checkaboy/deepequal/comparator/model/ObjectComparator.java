@@ -2,6 +2,7 @@ package com.checkaboy.deepequal.comparator.model;
 
 import com.checkaboy.deepequal.comparator.model.interf.IFieldComparator;
 import com.checkaboy.deepequal.comparator.model.interf.IObjectComparator;
+import com.checkaboy.deepequal.context.cache.IComparisonContext;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -29,21 +30,28 @@ public class ObjectComparator<S, T>
     }
 
     @Override
-    public boolean equal(S source, T target) {
-        //TODO Add logic to compare subclasses. If the first or second sub object represented has all fields equal
-        // to NULL, and the other sub object is also equal to NULL. They are equal now.
+    //TODO Add logic to compare subclasses. If the first or second sub object represented has all fields equal
+    // to NULL, and the other sub object is also equal to NULL. They are equal now.
+    public boolean compare(IComparisonContext comparisonContext, S source, T target) {
+        if (source == null && target == null) return true;
+        if (source == null || target == null) return false;
+
+        if (comparisonContext != null && !comparisonContext.enter(source, target)) return true;
+
         for (Entry<String, IFieldComparator<S, T>> entry : entrySet()) {
-            if (!entry.getValue().equal(source, target))
+            if (!entry.getValue().compare(comparisonContext, source, target))
                 return false;
         }
+
         return true;
     }
 
     @Override
-    public boolean fieldEqual(String fieldName, S source, T target) {
+    public boolean fieldEqual(IComparisonContext comparisonContext, String fieldName, S source, T target) {
         IFieldComparator<S, T> fieldComparator = get(fieldName);
         if (fieldComparator == null) return true;
-        return fieldComparator.equal(source, target);
+        if (comparisonContext != null && !comparisonContext.enter(source, target)) return true;
+        return fieldComparator.compare(comparisonContext, source, target);
     }
 
 }

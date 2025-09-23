@@ -1,5 +1,7 @@
 package com.checkaboy.deepequal.comparator.model.interf;
 
+import com.checkaboy.deepequal.context.cache.IComparisonContext;
+
 import java.util.Map;
 
 /**
@@ -14,7 +16,7 @@ public interface IObjectComparator<S, T>
      * @param target    object being compared
      * @return field comparison value by name
      */
-    boolean fieldEqual(String fieldName, S source, T target);
+    boolean fieldEqual(IComparisonContext comparisonContext, String fieldName, S source, T target);
 
     /*
     TODO list of non-matching fields

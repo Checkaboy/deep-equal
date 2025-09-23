@@ -2,6 +2,7 @@ package com.checkaboy.deepequal.comparator.model;
 
 import com.checkaboy.deepequal.comparator.model.interf.IFieldComparator;
 import com.checkaboy.deepequal.comparator.model.interf.IMapComparator;
+import com.checkaboy.deepequal.context.cache.IComparisonContext;
 
 import java.util.Map;
 import java.util.function.Function;
@@ -12,18 +13,16 @@ import java.util.function.Function;
 public class MapComparator<SM extends Map<SK, SV>, SK, SV, TM extends Map<TK, TV>, TK, TV>
         implements IMapComparator<SM, SK, SV, TM, TK, TV> {
 
-//    protected final Supplier<M> constructor;
     protected final Function<SK, TK> keyCaster;
     protected final IFieldComparator<SV, TV> comparator;
 
-    public MapComparator(/*Supplier<M> constructor, */Function<SK, TK> keyCaster, IFieldComparator<SV, TV> comparator) {
-//        this.constructor = constructor;
+    public MapComparator(Function<SK, TK> keyCaster, IFieldComparator<SV, TV> comparator) {
         this.keyCaster = keyCaster;
         this.comparator = comparator;
     }
 
     @Override
-    public boolean equal(SM source, TM target) {
+    public boolean compare(IComparisonContext comparisonContext, SM source, TM target) {
         if (source != null && target != null) {
             if (source.size() != target.size())
                 return false;
@@ -33,7 +32,7 @@ public class MapComparator<SM extends Map<SK, SV>, SK, SV, TM extends Map<TK, TV
                 //  cast can destruct hash codes contract. But identifier objects (DTO/Entity)
                 //  can save hash codes contract...
                 TV secondValue = target.get(keyCaster.apply(firstEntry.getKey()));
-                if (!comparator.equal(firstEntry.getValue(), secondValue))
+                if (!comparator.compare(comparisonContext, firstEntry.getValue(), secondValue))
                     return false;
             }
 

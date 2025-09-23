@@ -1,6 +1,7 @@
 package com.checkaboy.deepequal.comparator.model;
 
 import com.checkaboy.deepequal.comparator.model.interf.IFieldComparator;
+import com.checkaboy.deepequal.context.cache.IComparisonContext;
 
 import java.util.Objects;
 import java.util.function.Function;
@@ -22,16 +23,16 @@ public class FieldComparator<SO, SV, TO, TV>
     }
 
     @Override
-    public boolean equal(SO first, TO second) {
-        return comparator.equal(sourceExtractor.apply(first), targetExtractor.apply(second));
+    public boolean compare(IComparisonContext comparisonContext, SO first, TO second) {
+        return comparator.compare(comparisonContext, sourceExtractor.apply(first), targetExtractor.apply(second));
     }
 
     public static <O, V> IFieldComparator<O, O> simpleFieldComparator(Function<O, V> extractor) {
-        return new FieldComparator<>(extractor, extractor, Objects::equals);
+        return new FieldComparator<>(extractor, extractor, (comparisonContext, source, target) -> Objects.equals(source, target));
     }
 
     public static <S, T, V> IFieldComparator<S, T> simpleFieldComparator(Function<S, V> sourceExtractor, Function<T, V> targetExtractor) {
-        return new FieldComparator<>(sourceExtractor, targetExtractor, Objects::equals);
+        return new FieldComparator<>(sourceExtractor, targetExtractor, (comparisonContext, source, target) -> Objects.equals(source, target));
     }
 
 }

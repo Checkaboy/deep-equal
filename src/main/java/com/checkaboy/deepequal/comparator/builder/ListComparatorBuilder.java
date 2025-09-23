@@ -18,7 +18,7 @@ public class ListComparatorBuilder<SV, TV>
         implements ICollectionComparatorBuilder<List<SV>, SV, List<TV>, TV> {
 
     //    private Supplier<List<V>> constructor = ArrayList::new;
-    private IFieldComparator<SV, TV> comparator = Objects::equals;
+    private IFieldComparator<SV, TV> comparator = (comparisonContext, source, target) -> Objects.equals(source, target);
     private IFieldComparator<SV, TV> identifierComparator;
 
     public ListComparatorBuilder(Class<SV> sourceType, Class<TV> targetType) {

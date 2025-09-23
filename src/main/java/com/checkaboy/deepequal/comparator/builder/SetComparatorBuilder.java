@@ -19,7 +19,7 @@ public class SetComparatorBuilder<SV, TV>
         implements ICollectionComparatorBuilder<Set<SV>, SV, Set<TV>, TV> {
 
     //    private Supplier<Set<V>> constructor = HashSet::new;
-    private IFieldComparator<SV, TV> comparator = Objects::equals;
+    private IFieldComparator<SV, TV> comparator = (comparisonContext, source, target) -> Objects.equals(source, target);
     private IFieldComparator<SV, TV> identifierComparator;
 
     public SetComparatorBuilder(Class<SV> sourceType, Class<TV> targetType) {

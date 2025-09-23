@@ -1,4 +1,6 @@
-package com.checkaboy.deepequal;
+package com.checkaboy.deepequal.comparator.model.interf;
+
+import com.checkaboy.deepequal.context.cache.IComparisonContext;
 
 /**
  * @author Taras Shaptala
@@ -13,6 +15,6 @@ public interface IComparator<S, T> {
      * @param target object being compared
      * @return equal or not
      */
-    boolean equal(S source, T target);
+    boolean compare(IComparisonContext comparisonContext, S source, T target);
 
 }
