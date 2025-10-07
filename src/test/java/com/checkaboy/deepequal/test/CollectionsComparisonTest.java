@@ -5,6 +5,7 @@ import com.checkaboy.deepequal.comparator.model.FieldComparator;
 import com.checkaboy.deepequal.comparator.model.ObjectComparator;
 import com.checkaboy.deepequal.comparator.model.interf.ICollectionComparator;
 import com.checkaboy.deepequal.comparator.model.interf.IObjectComparator;
+import com.checkaboy.deepequal.comparator.strategy.collection.UnorderedCollectionComparisonStrategy;
 import com.checkaboy.deepequal.model.pet.EAnimal;
 import com.checkaboy.deepequal.model.pet.Pet;
 import org.junit.Assert;
@@ -24,6 +25,7 @@ public class CollectionsComparisonTest {
         petComparator.put("age", FieldComparator.simpleFieldComparator(Pet::getAge));
         petComparator.put("animal", FieldComparator.simpleFieldComparator(Pet::getAnimal));
         return new CollectionComparator<>(
+                new UnorderedCollectionComparisonStrategy<>(),
                 petComparator
         );
     }

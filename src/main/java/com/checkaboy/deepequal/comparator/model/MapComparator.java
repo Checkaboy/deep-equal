@@ -2,6 +2,7 @@ package com.checkaboy.deepequal.comparator.model;
 
 import com.checkaboy.deepequal.comparator.model.interf.IFieldComparator;
 import com.checkaboy.deepequal.comparator.model.interf.IMapComparator;
+import com.checkaboy.deepequal.comparator.strategy.map.IKeyMatchingStrategy;
 import com.checkaboy.deepequal.context.cache.IComparisonContext;
 
 import java.util.Map;
@@ -13,35 +14,30 @@ import java.util.function.Function;
 public class MapComparator<SM extends Map<SK, SV>, SK, SV, TM extends Map<TK, TV>, TK, TV>
         implements IMapComparator<SM, SK, SV, TM, TK, TV> {
 
-    protected final Function<SK, TK> keyCaster;
+    protected final IKeyMatchingStrategy<SK, SV, TK, TV> keyMatchingStrategy;
     protected final IFieldComparator<SV, TV> comparator;
 
-    public MapComparator(Function<SK, TK> keyCaster, IFieldComparator<SV, TV> comparator) {
-        this.keyCaster = keyCaster;
+    public MapComparator(IKeyMatchingStrategy<SK, SV, TK, TV> keyMatchingStrategy, IFieldComparator<SV, TV> comparator) {
+        this.keyMatchingStrategy = keyMatchingStrategy;
         this.comparator = comparator;
     }
 
     @Override
     public boolean compare(IComparisonContext comparisonContext, SM source, TM target) {
-        if (source != null && target != null) {
-            if (source.size() != target.size())
+        if (source == null && target == null) return true;
+        if (source == null || target == null) return false;
+        if (source.size() != target.size()) return false;
+
+        for (Map.Entry<SK, SV> entry : source.entrySet()) {
+            TV targetValue = keyMatchingStrategy.findMatchingValue(comparisonContext, entry.getKey(), entry.getValue(), target);
+            if (!comparator.compare(comparisonContext, entry.getValue(), targetValue))
                 return false;
-
-            for (Map.Entry<SK, SV> firstEntry : source.entrySet()) {
-                // TODO transform key SK -> TK ??? OR K is equal type in generic template
-                //  cast can destruct hash codes contract. But identifier objects (DTO/Entity)
-                //  can save hash codes contract...
-                TV secondValue = target.get(keyCaster.apply(firstEntry.getKey()));
-                if (!comparator.compare(comparisonContext, firstEntry.getValue(), secondValue))
-                    return false;
-            }
-
-            return true;
         }
 
-        return source == null && target == null;
+        return true;
     }
 
+    // TODO Move to util module
 //    @Override
 //    public M objectsNotContainsInSecondMap(M first, M second) {
 //        M map = constructor.get();

@@ -5,23 +5,17 @@ import com.checkaboy.deepequal.comparator.model.FieldComparator;
 import com.checkaboy.deepequal.comparator.model.ObjectComparator;
 import com.checkaboy.deepequal.comparator.model.interf.IObjectComparator;
 import com.checkaboy.deepequal.comparator.strategy.collection.UnorderedCollectionComparisonStrategy;
-import com.checkaboy.deepequal.comparator.transaction.ComparisonTransaction;
-import com.checkaboy.deepequal.comparator.transaction.IComparisonTransaction;
-import com.checkaboy.deepequal.context.cache.ComparisonContext;
 import com.checkaboy.deepequal.model.book.dto.AuthorDto;
 import com.checkaboy.deepequal.model.book.dto.BookDto;
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * @author Taras Shaptala
  */
-public class ObjectEqualsTest {
+public class NullTest {
 
     @Test
-    public void test1() {
+    public void simpleNullTest() {
         IObjectComparator<AuthorDto, AuthorDto> authorComparator = new ObjectComparator<>();
         IObjectComparator<BookDto, BookDto> bookComparator = new ObjectComparator<>();
 
@@ -44,39 +38,10 @@ public class ObjectEqualsTest {
         bookComparator.put("id", FieldComparator.simpleFieldComparator(BookDto::getId));
         bookComparator.put("name", FieldComparator.simpleFieldComparator(BookDto::getName));
 
-        AuthorDto authorDto1 = createAuthor();
-        authorDto1.setBooks(createBooks());
-        authorDto1.getBooks().forEach(bookDto -> bookDto.setAuthor(authorDto1));
+        AuthorDto full = new AuthorDto(null, null, null, null);
+        AuthorDto empty = null;
 
-        AuthorDto authorDto2 = createAuthor();
-        authorDto2.setBooks(createBooks());
-        authorDto2.getBooks().forEach(bookDto -> bookDto.setAuthor(authorDto2));
-
-        IComparisonTransaction<AuthorDto, AuthorDto> transaction = new ComparisonTransaction<>(authorComparator, ComparisonContext::new);
-
-        System.out.println(transaction.compare(authorDto1, authorDto2));
-    }
-
-    public AuthorDto createAuthor() {
-        AuthorDto author = new AuthorDto();
-        author.setId(1L);
-        author.setFirstName("testFirstName");
-        author.setLastName("testLastName");
-        return author;
-    }
-
-    public List<BookDto> createBooks() {
-        int bookCount = 3;
-        List<BookDto> books = new ArrayList<>(bookCount);
-
-        for (int i = 0; i < bookCount; i++) {
-            BookDto book = new BookDto();
-            book.setId((long) i);
-            book.setName("test name " + i);
-            books.add(book);
-        }
-
-        return books;
+        System.out.println(authorComparator.compare(null, full, empty));
     }
 
 }

@@ -30,8 +30,6 @@ public class ObjectComparator<S, T>
     }
 
     @Override
-    //TODO Add logic to compare subclasses. If the first or second sub object represented has all fields equal
-    // to NULL, and the other sub object is also equal to NULL. They are equal now.
     public boolean compare(IComparisonContext comparisonContext, S source, T target) {
         if (source == null && target == null) return true;
         if (source == null || target == null) return false;

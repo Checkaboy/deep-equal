@@ -2,12 +2,12 @@ package com.checkaboy.deepequal.comparator.builder;
 
 import com.checkaboy.deepequal.comparator.builder.interf.ICollectionComparatorBuilder;
 import com.checkaboy.deepequal.comparator.model.CollectionComparator;
-import com.checkaboy.deepequal.comparator.model.IdentifiedCollectionComparator;
 import com.checkaboy.deepequal.comparator.model.interf.ICollectionComparator;
 import com.checkaboy.deepequal.comparator.model.interf.IFieldComparator;
+import com.checkaboy.deepequal.comparator.strategy.collection.ICollectionComparisonStrategy;
+import com.checkaboy.deepequal.comparator.strategy.collection.UnorderedCollectionComparisonStrategy;
 import com.checkaboy.objectutils.container.AbstractTypifiedContainer;
 
-import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -18,19 +18,18 @@ public class SetComparatorBuilder<SV, TV>
         extends AbstractTypifiedContainer<TV>
         implements ICollectionComparatorBuilder<Set<SV>, SV, Set<TV>, TV> {
 
-    //    private Supplier<Set<V>> constructor = HashSet::new;
+    private ICollectionComparisonStrategy<Set<SV>, SV, Set<TV>, TV> strategy = new UnorderedCollectionComparisonStrategy<>();
     private IFieldComparator<SV, TV> comparator = (comparisonContext, source, target) -> Objects.equals(source, target);
-    private IFieldComparator<SV, TV> identifierComparator;
 
     public SetComparatorBuilder(Class<SV> sourceType, Class<TV> targetType) {
         super(targetType);
     }
 
-//    @Override
-//    public SetComparatorBuilder<V> setConstructor(Supplier<Set<V>> constructor) {
-//        this.constructor = constructor;
-//        return this;
-//    }
+    @Override
+    public ICollectionComparatorBuilder<Set<SV>, SV, Set<TV>, TV> setStrategy(ICollectionComparisonStrategy<Set<SV>, SV, Set<TV>, TV> strategy) {
+        this.strategy = strategy;
+        return this;
+    }
 
     @Override
     public SetComparatorBuilder<SV, TV> setComparator(IFieldComparator<SV, TV> comparator) {
@@ -38,15 +37,8 @@ public class SetComparatorBuilder<SV, TV>
         return this;
     }
 
-    @Override
-    public SetComparatorBuilder<SV, TV> setIdentifierComparator(IFieldComparator<SV, TV> identifierComparator) {
-        this.identifierComparator = identifierComparator;
-        return this;
-    }
-
-    public ICollectionComparator<List<SV>, SV, List<TV>, TV> build() {
-        if (identifierComparator == null) return new CollectionComparator<>(/*constructor, */comparator);
-        else return new IdentifiedCollectionComparator<>(comparator, identifierComparator);
+    public ICollectionComparator<Set<SV>, SV, Set<TV>, TV> build() {
+        return new CollectionComparator<>(strategy, comparator);
     }
 
 }
