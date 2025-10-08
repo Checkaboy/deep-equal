@@ -1,4 +1,4 @@
-package com.checkaboy.deepequal.diff.model;
+package com.checkaboy.deepequal.diff.container;
 
 /**
  * @author Taras Shaptala

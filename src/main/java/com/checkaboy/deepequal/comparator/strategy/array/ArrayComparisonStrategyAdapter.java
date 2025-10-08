@@ -22,9 +22,9 @@ public class ArrayComparisonStrategyAdapter<S, T>
 
     @Override
     public boolean compareArrays(IComparisonContext comparisonContext, S[] source, T[] target, IFieldComparator<S, T> comparator) {
-        List<S> sList = source != null ? Arrays.asList(source) : null;
-        List<T> tList = target != null ? Arrays.asList(target) : null;
-        return collectionStrategy.compare(comparisonContext, sList, tList, comparator);
+        List<S> sourceList = source != null ? Arrays.asList(source) : null;
+        List<T> targetList = target != null ? Arrays.asList(target) : null;
+        return collectionStrategy.compare(comparisonContext, sourceList, targetList, comparator);
     }
 
 }
