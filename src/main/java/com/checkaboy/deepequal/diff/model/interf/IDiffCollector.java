@@ -1,9 +1,7 @@
 package com.checkaboy.deepequal.diff.model.interf;
 
 import com.checkaboy.deepequal.context.cache.IComparisonContext;
-import com.checkaboy.deepequal.diff.container.IFieldDifference;
-
-import java.util.List;
+import com.checkaboy.deepequal.diff.container.IDiffNode;
 
 /**
  * @author Taras Shaptala
@@ -11,6 +9,6 @@ import java.util.List;
 @FunctionalInterface
 public interface IDiffCollector<S, T> {
 
-    List<IFieldDifference> collectDifferences(IComparisonContext comparisonContext, S source, T target);
+    IDiffNode collect(IComparisonContext comparisonContext, S source, T target, String currentPath);
 
 }

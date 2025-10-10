@@ -1,59 +1,43 @@
 package com.checkaboy.deepequal.diff.model;
 
-import com.checkaboy.deepequal.comparator.model.FieldComparator;
-import com.checkaboy.deepequal.comparator.model.interf.IFieldComparator;
 import com.checkaboy.deepequal.context.cache.IComparisonContext;
-import com.checkaboy.deepequal.diff.container.IFieldDifference;
-import com.checkaboy.deepequal.diff.container.factory.IFieldDifferenceFactory;
+import com.checkaboy.deepequal.diff.container.IDiffNode;
+import com.checkaboy.deepequal.diff.container.factory.IDiffNodeFactory;
 import com.checkaboy.deepequal.diff.model.interf.IDiffCollector;
+import com.checkaboy.deepequal.diff.model.interf.IFieldDiffCollector;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
  * @author Taras Shaptala
  */
 public class ObjectDiffCollector<S, T>
-        extends HashMap<String, IFieldComparator<S, T>>
+        extends HashMap<String, IFieldDiffCollector<S, T>>
         implements IDiffCollector<S, T> {
 
-    private final String rootName;
-    private final IFieldDifferenceFactory fieldDifferenceFactory;
+    private final String fieldName;
+    private final IDiffNodeFactory diffNodeFactory;
 
-    public ObjectDiffCollector(IFieldDifferenceFactory fieldDifferenceFactory) {
-        this("<root>", fieldDifferenceFactory);
-    }
-
-    public ObjectDiffCollector(String rootName, IFieldDifferenceFactory fieldDifferenceFactory) {
-        this.rootName = rootName;
-        this.fieldDifferenceFactory = fieldDifferenceFactory;
+    public ObjectDiffCollector(String fieldName, IDiffNodeFactory diffNodeFactory) {
+        this.fieldName = fieldName;
+        this.diffNodeFactory = diffNodeFactory;
     }
 
     @Override
-    public List<IFieldDifference> collectDifferences(IComparisonContext comparisonContext, S source, T target) {
-        List<IFieldDifference> differences = new ArrayList<>();
+    public IDiffNode collect(IComparisonContext comparisonContext, S source, T target, String currentPath) {
+        if (source == null && target == null) return null;
+        final String fullPath = currentPath + "." + fieldName;
+        IDiffNode node = diffNodeFactory.create(fullPath, source, target);
 
-        if (source == null && target == null) return differences;
-        if (source == null || target == null) {
-            differences.add(fieldDifferenceFactory.create(rootName, source, target));
-            return differences;
+        if (source == null || target == null) return node;
+
+        for (Map.Entry<String, IFieldDiffCollector<S, T>> entry : entrySet()) {
+            IDiffNode childNode = entry.getValue().collect(comparisonContext, source, target, fullPath);
+            if (childNode != null) node.addChild(childNode);
         }
 
-        for (Map.Entry<String, IFieldComparator<S, T>> entry : entrySet()) {
-            String fieldName = entry.getKey();
-            IFieldComparator<S, T> comparator = entry.getValue();
-
-            boolean equal = comparator.compare(comparisonContext, source, target);
-            if (!equal) {
-//                Object sourceValue = ((FieldComparator<S, T>) comparator).extractSource(source);
-//                Object targetValue = ((FieldComparator<S, T>) comparator).extractTarget(target);
-//                differences.add(new FieldDifference(fieldName, sourceValue, targetValue));
-            }
-        }
-
-        return differences;
+        return !node.getChildren().isEmpty() ? node : null;
     }
 
 }
