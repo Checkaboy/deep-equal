@@ -6,7 +6,7 @@ import com.checkaboy.deepequal.comparator.model.interf.IFieldComparator;
 import com.checkaboy.deepequal.comparator.model.interf.IMapComparator;
 import com.checkaboy.deepequal.comparator.strategy.map.DirectKeyMatchingStrategy;
 import com.checkaboy.deepequal.comparator.strategy.map.IKeyMatchingStrategy;
-import com.checkaboy.objectutils.container.AbstractTypifiedContainer;
+import com.checkaboy.objectutils.container.AbstractBiTypifiedContainer;
 
 import java.util.Map;
 import java.util.Objects;
@@ -15,14 +15,14 @@ import java.util.Objects;
  * @author Taras Shaptala
  */
 public class MapComparatorBuilder<SK, SV, TK, TV>
-        extends AbstractTypifiedContainer<TV>
+        extends AbstractBiTypifiedContainer<SV, TV>
         implements IMapComparatorBuilder<Map<SK, SV>, SK, SV, Map<TK, TV>, TK, TV> {
 
     protected IKeyMatchingStrategy<SK, SV, TK, TV> strategy = new DirectKeyMatchingStrategy<>();
     protected IFieldComparator<SV, TV> comparator = (comparisonContext, source, target) -> Objects.equals(source, target);
 
     public MapComparatorBuilder(Class<SV> sourceType, Class<TV> targetType) {
-        super(targetType);
+        super(sourceType, targetType);
     }
 
     @Override
@@ -37,6 +37,7 @@ public class MapComparatorBuilder<SK, SV, TK, TV>
         return this;
     }
 
+    @Override
     public IMapComparator<Map<SK, SV>, SK, SV, Map<TK, TV>, TK, TV> build() {
         return new MapComparator<>(strategy, comparator);
     }

@@ -6,7 +6,7 @@ import com.checkaboy.deepequal.comparator.model.interf.ICollectionComparator;
 import com.checkaboy.deepequal.comparator.model.interf.IFieldComparator;
 import com.checkaboy.deepequal.comparator.strategy.collection.ICollectionComparisonStrategy;
 import com.checkaboy.deepequal.comparator.strategy.collection.UnorderedCollectionComparisonStrategy;
-import com.checkaboy.objectutils.container.AbstractTypifiedContainer;
+import com.checkaboy.objectutils.container.AbstractBiTypifiedContainer;
 
 import java.util.List;
 import java.util.Objects;
@@ -15,14 +15,14 @@ import java.util.Objects;
  * @author Taras Shaptala
  */
 public class ListComparatorBuilder<SV, TV>
-        extends AbstractTypifiedContainer<TV>
+        extends AbstractBiTypifiedContainer<SV, TV>
         implements ICollectionComparatorBuilder<List<SV>, SV, List<TV>, TV> {
 
     private ICollectionComparisonStrategy<List<SV>, SV, List<TV>, TV> strategy = new UnorderedCollectionComparisonStrategy<>();
     private IFieldComparator<SV, TV> comparator = (comparisonContext, source, target) -> Objects.equals(source, target);
 
     public ListComparatorBuilder(Class<SV> sourceType, Class<TV> targetType) {
-        super(targetType);
+        super(sourceType, targetType);
     }
 
     @Override
@@ -37,6 +37,7 @@ public class ListComparatorBuilder<SV, TV>
         return this;
     }
 
+    @Override
     public ICollectionComparator<List<SV>, SV, List<TV>, TV> build() {
         return new CollectionComparator<>(strategy, comparator);
     }

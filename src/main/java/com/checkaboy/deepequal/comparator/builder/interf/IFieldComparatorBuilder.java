@@ -7,7 +7,8 @@ import java.util.function.Function;
 /**
  * @author Taras Shaptala
  */
-public interface IFieldComparatorBuilder<SO, SV, TO, TV> {
+public interface IFieldComparatorBuilder<SO, SV, TO, TV>
+        extends IComparatorBuilder<SO, TO> {
 
     IFieldComparatorBuilder<SO, SV, TO, TV> setSourceExtractor(Function<SO, SV> extractor);
 

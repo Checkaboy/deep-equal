@@ -7,7 +7,8 @@ import java.util.Map;
 /**
  * @author Taras Shaptala
  */
-public interface IObjectComparatorBuilder<S, T> {
+public interface IObjectComparatorBuilder<S, T>
+        extends IComparatorBuilder<S, T> {
 
     IObjectComparatorBuilder<S, T> setFieldComparators(Map<String, IFieldComparator<S, T>> fieldComparatorMap);
 

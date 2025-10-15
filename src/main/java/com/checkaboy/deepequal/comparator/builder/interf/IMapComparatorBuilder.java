@@ -8,7 +8,8 @@ import java.util.Map;
 /**
  * @author Taras Shaptala
  */
-public interface IMapComparatorBuilder<SM extends Map<SK, SV>, SK, SV, TM extends Map<TK, TV>, TK, TV> {
+public interface IMapComparatorBuilder<SM extends Map<SK, SV>, SK, SV, TM extends Map<TK, TV>, TK, TV>
+        extends IComparatorBuilder<SM, TM> {
 
     IMapComparatorBuilder<SM, SK, SV, TM, TK, TV> setStrategy(IKeyMatchingStrategy<SK, SV, TK, TV> strategy);
 

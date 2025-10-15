@@ -37,37 +37,4 @@ public class MapComparator<SM extends Map<SK, SV>, SK, SV, TM extends Map<TK, TV
         return true;
     }
 
-    // TODO Move to util module
-//    @Override
-//    public M objectsNotContainsInSecondMap(M first, M second) {
-//        M map = constructor.get();
-//
-//        if (first != null && second != null) {
-//            for (Map.Entry<K, V> firstEntry : first.entrySet()) {
-//                V secondValue = second.get(firstEntry.getKey());
-//                if (secondValue == null) {
-//                    map.put(firstEntry.getKey(), firstEntry.getValue());
-//                }
-//            }
-//        }
-//
-//        return map;
-//    }
-
-//    @Override
-//    public M objectsNotContainsInSecondMapButEqualsByKey(M first, M second) {
-//        M map = constructor.get();
-//
-//        if (first != null && second != null) {
-//            for (Map.Entry<K, V> firstEntry : first.entrySet()) {
-//                V secondValue = second.get(firstEntry.getKey());
-//                if (secondValue != null && !comparator.equal(firstEntry.getValue(), secondValue)) {
-//                    map.put(firstEntry.getKey(), secondValue);
-//                }
-//            }
-//        }
-//
-//        return map;
-//    }
-
 }

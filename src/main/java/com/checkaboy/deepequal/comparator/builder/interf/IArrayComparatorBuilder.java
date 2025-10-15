@@ -9,7 +9,8 @@ import java.util.Collection;
 /**
  * @author Taras Shaptala
  */
-public interface IArrayComparatorBuilder<S, T> {
+public interface IArrayComparatorBuilder<S, T>
+        extends IComparatorBuilder<S[], T[]> {
 
     IArrayComparatorBuilder<S, T> setStrategy(ICollectionComparisonStrategy<Collection<S>, S, Collection<T>, T> strategy);
 

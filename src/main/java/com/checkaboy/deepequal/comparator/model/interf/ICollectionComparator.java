@@ -7,8 +7,4 @@ import java.util.Collection;
  */
 public interface ICollectionComparator<SC extends Collection<SV>, SV, TC extends Collection<TV>, TV>
         extends IFieldComparator<SC, TC> {
-
-    //TODO Move to utils module
-//    C objectsNotContainsInSecondCollection(C first, C second);
-
 }

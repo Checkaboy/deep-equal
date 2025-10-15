@@ -18,8 +18,4 @@ public interface IObjectComparator<S, T>
      */
     boolean fieldEqual(IComparisonContext comparisonContext, String fieldName, S source, T target);
 
-    /*
-    TODO list of non-matching fields
-     */
-
 }

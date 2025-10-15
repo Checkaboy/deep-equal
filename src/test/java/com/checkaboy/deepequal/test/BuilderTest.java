@@ -113,7 +113,7 @@ public class BuilderTest {
                 .putFieldComparator("color", FieldComparator.simpleFieldComparator(Car::getColor))
                 .putFieldComparator("doorCount", FieldComparator.simpleFieldComparator(Car::getDoorCount))
                 .putFieldComparator("engine",
-                        new FieldComparatorBuilder<Car, Engine, Car, Engine>(Car.class, Car.class)
+                        new FieldComparatorBuilder<Car, Engine, Car, Engine>(Engine.class, Engine.class)
                                 .setTargetExtractor(Car::getEngine)
                                 .setSourceExtractor(Car::getEngine)
                                 .setComparator(
@@ -124,7 +124,7 @@ public class BuilderTest {
                                                 .build())
                                 .build())
                 .putFieldComparator("transmission",
-                        new FieldComparatorBuilder<Car, Transmission, Car, Transmission>(Car.class, Car.class)
+                        new FieldComparatorBuilder<Car, Transmission, Car, Transmission>(Transmission.class, Transmission.class)
                                 .setSourceExtractor(Car::getTransmission)
                                 .setTargetExtractor(Car::getTransmission)
                                 .setComparator(

@@ -8,7 +8,8 @@ import java.util.Collection;
 /**
  * @author Taras Shaptala
  */
-public interface ICollectionComparatorBuilder<SC extends Collection<SV>, SV, TC extends Collection<TV>, TV> {
+public interface ICollectionComparatorBuilder<SC extends Collection<SV>, SV, TC extends Collection<TV>, TV>
+        extends IComparatorBuilder<SC, TC> {
 
     ICollectionComparatorBuilder<SC, SV, TC, TV> setStrategy(ICollectionComparisonStrategy<SC, SV, TC, TV> strategy);
 
