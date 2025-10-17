@@ -4,6 +4,7 @@ import com.checkaboy.deepequal.comparator.model.FieldComparator;
 import com.checkaboy.deepequal.comparator.model.ObjectComparator;
 import com.checkaboy.deepequal.comparator.model.interf.IFieldComparator;
 import com.checkaboy.deepequal.comparator.model.interf.IObjectComparator;
+import com.checkaboy.deepequal.diff.container.DiffNode;
 import com.checkaboy.deepequal.diff.model.FieldDiffCollector;
 import com.checkaboy.deepequal.diff.model.interf.IFieldDiffCollector;
 import com.checkaboy.deepequal.model.car.Car;
@@ -54,8 +55,8 @@ public class DeepComparisonObjectTest {
         carMercedesAMG63.setModel("AMG 63");
 
         IFieldDiffCollector<Car, Car> fieldDiffCollector = FieldDiffCollector.oneObjectFieldDiffCollector("carBranch", Car::getCarBrand);
-        System.out.println(fieldDiffCollector.collect(null, carBmvI3, carBmvI8, "Car"));
-        System.out.println(fieldDiffCollector.collect(null, carBmvI3, carMercedesAMG63, "Car"));
+        System.out.println(fieldDiffCollector.collect(null, DiffNode::new, carBmvI3, carBmvI8, "Car"));
+        System.out.println(fieldDiffCollector.collect(null, DiffNode::new, carBmvI3, carMercedesAMG63, "Car"));
     }
 
     @Test

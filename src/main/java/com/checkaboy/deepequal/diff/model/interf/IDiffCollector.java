@@ -2,6 +2,7 @@ package com.checkaboy.deepequal.diff.model.interf;
 
 import com.checkaboy.deepequal.context.cache.IComparisonContext;
 import com.checkaboy.deepequal.diff.container.IDiffNode;
+import com.checkaboy.deepequal.diff.container.factory.IDiffNodeFactory;
 
 /**
  * @author Taras Shaptala
@@ -9,6 +10,6 @@ import com.checkaboy.deepequal.diff.container.IDiffNode;
 @FunctionalInterface
 public interface IDiffCollector<S, T> {
 
-    IDiffNode collect(IComparisonContext comparisonContext, S source, T target, String currentPath);
+    IDiffNode collect(IComparisonContext comparisonContext, IDiffNodeFactory diffNodeFactory, S source, T target, String currentPath);
 
 }

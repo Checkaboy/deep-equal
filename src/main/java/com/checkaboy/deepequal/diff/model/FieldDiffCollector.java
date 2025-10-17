@@ -2,7 +2,6 @@ package com.checkaboy.deepequal.diff.model;
 
 import com.checkaboy.deepequal.comparator.model.interf.IFieldComparator;
 import com.checkaboy.deepequal.context.cache.IComparisonContext;
-import com.checkaboy.deepequal.diff.container.DiffNode;
 import com.checkaboy.deepequal.diff.container.IDiffNode;
 import com.checkaboy.deepequal.diff.container.factory.IDiffNodeFactory;
 import com.checkaboy.deepequal.diff.model.interf.IFieldDiffCollector;
@@ -34,9 +33,10 @@ public class FieldDiffCollector<SO, SV, TO, TV>
     }
 
     @Override
-    public IDiffNode collect(IComparisonContext comparisonContext, SO source, TO target, String currentPath) {
+    public IDiffNode collect(IComparisonContext comparisonContext, IDiffNodeFactory diffNodeFactory, SO source, TO target, String currentPath) {
         return diffCollector.collect(
                 comparisonContext,
+                diffNodeFactory,
                 sourceExtractor.apply(source),
                 targetExtractor.apply(target),
                 currentPath + "." + fieldName
@@ -49,28 +49,19 @@ public class FieldDiffCollector<SO, SV, TO, TV>
             String fieldName,
             Function<S, V> extractor
     ) {
-        return oneObjectFieldDiffCollector(fieldName, extractor, DiffNode::new);
+        return oneObjectFieldDiffCollector(fieldName, extractor, (comparisonContext, source, target) -> Objects.equals(source, target));
     }
 
     public static <S, V> IFieldDiffCollector<S, S> oneObjectFieldDiffCollector(
             String fieldName,
             Function<S, V> extractor,
-            IDiffNodeFactory diffNodeFactory
-    ) {
-        return oneObjectFieldDiffCollector(fieldName, extractor, diffNodeFactory, (comparisonContext, source, target) -> Objects.equals(source, target));
-    }
-
-    public static <S, V> IFieldDiffCollector<S, S> oneObjectFieldDiffCollector(
-            String fieldName,
-            Function<S, V> extractor,
-            IDiffNodeFactory diffNodeFactory,
             IFieldComparator<V, V> comparator
     ) {
         return new FieldDiffCollector<>(
                 fieldName,
                 extractor,
                 extractor,
-                (comparisonContext, source, target, currentPath) -> {
+                (comparisonContext, diffNodeFactory, source, target, currentPath) -> {
                     if (!comparator.compare(comparisonContext, source, target))
                         return diffNodeFactory.create(currentPath, source, target);
                     else return null;
@@ -85,30 +76,20 @@ public class FieldDiffCollector<SO, SV, TO, TV>
             Function<SO, V> sourceExtractor,
             Function<TO, V> targetExtractor
     ) {
-        return doubleObjectFieldDiffCollector(fieldName, sourceExtractor, targetExtractor, DiffNode::new);
+        return doubleObjectFieldDiffCollector(fieldName, sourceExtractor, targetExtractor, (comparisonContext, source, target) -> Objects.equals(source, target));
     }
 
     public static <SO, TO, V> IFieldDiffCollector<SO, TO> doubleObjectFieldDiffCollector(
             String fieldName,
             Function<SO, V> sourceExtractor,
             Function<TO, V> targetExtractor,
-            IDiffNodeFactory diffNodeFactory
-    ) {
-        return doubleObjectFieldDiffCollector(fieldName, sourceExtractor, targetExtractor, diffNodeFactory, (comparisonContext, source, target) -> Objects.equals(source, target));
-    }
-
-    public static <SO, TO, V> IFieldDiffCollector<SO, TO> doubleObjectFieldDiffCollector(
-            String fieldName,
-            Function<SO, V> sourceExtractor,
-            Function<TO, V> targetExtractor,
-            IDiffNodeFactory diffNodeFactory,
             IFieldComparator<V, V> comparator
     ) {
         return new FieldDiffCollector<>(
                 fieldName,
                 sourceExtractor,
                 targetExtractor,
-                (comparisonContext, source, target, currentPath) -> {
+                (comparisonContext, diffNodeFactory, source, target, currentPath) -> {
                     if (!comparator.compare(comparisonContext, source, target))
                         return diffNodeFactory.create(currentPath, source, target);
                     else return null;
@@ -123,30 +104,20 @@ public class FieldDiffCollector<SO, SV, TO, TV>
             Function<SO, SV> sourceExtractor,
             Function<TO, TV> targetExtractor
     ) {
-        return doubleValueFieldDiffCollector(fieldName, sourceExtractor, targetExtractor, DiffNode::new);
+        return doubleValueFieldDiffCollector(fieldName, sourceExtractor, targetExtractor, (comparisonContext, source, target) -> Objects.equals(source, target));
     }
 
     public static <SO, SV, TO, TV> IFieldDiffCollector<SO, TO> doubleValueFieldDiffCollector(
             String fieldName,
             Function<SO, SV> sourceExtractor,
             Function<TO, TV> targetExtractor,
-            IDiffNodeFactory diffNodeFactory
-    ) {
-        return doubleValueFieldDiffCollector(fieldName, sourceExtractor, targetExtractor, diffNodeFactory, (comparisonContext, source, target) -> Objects.equals(source, target));
-    }
-
-    public static <SO, SV, TO, TV> IFieldDiffCollector<SO, TO> doubleValueFieldDiffCollector(
-            String fieldName,
-            Function<SO, SV> sourceExtractor,
-            Function<TO, TV> targetExtractor,
-            IDiffNodeFactory diffNodeFactory,
             IFieldComparator<SV, TV> comparator
     ) {
         return new FieldDiffCollector<>(
                 fieldName,
                 sourceExtractor,
                 targetExtractor,
-                (comparisonContext, source, target, currentPath) -> {
+                (comparisonContext, diffNodeFactory, source, target, currentPath) -> {
                     if (!comparator.compare(comparisonContext, source, target))
                         return diffNodeFactory.create(currentPath, source, target);
                     else return null;
