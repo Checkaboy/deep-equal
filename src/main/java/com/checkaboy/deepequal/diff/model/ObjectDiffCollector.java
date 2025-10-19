@@ -16,36 +16,30 @@ public class ObjectDiffCollector<S, T>
         extends HashMap<String, IFieldDiffCollector<S, T>>
         implements IDiffCollector<S, T> {
 
-    private final String fieldName;
-
-    public ObjectDiffCollector(int initialCapacity, float loadFactor, String fieldName) {
+    public ObjectDiffCollector(int initialCapacity, float loadFactor) {
         super(initialCapacity, loadFactor);
-        this.fieldName = fieldName;
     }
 
-    public ObjectDiffCollector(int initialCapacity, String fieldName) {
+    public ObjectDiffCollector(int initialCapacity) {
         super(initialCapacity);
-        this.fieldName = fieldName;
     }
 
     public ObjectDiffCollector(String fieldName) {
-        this.fieldName = fieldName;
     }
 
-    public ObjectDiffCollector(Map<? extends String, ? extends IFieldDiffCollector<S, T>> m, String fieldName) {
+    public ObjectDiffCollector(Map<? extends String, ? extends IFieldDiffCollector<S, T>> m) {
         super(m);
-        this.fieldName = fieldName;
     }
 
     @Override
     public IDiffNode collect(IComparisonContext comparisonContext, IDiffNodeFactory diffNodeFactory, S source, T target, String currentPath) {
         if (source == null && target == null) return null;
-        final String fullPath = currentPath + "." + fieldName;
-        IDiffNode node = diffNodeFactory.create(fullPath, source, target);
+        IDiffNode node = diffNodeFactory.create(currentPath, source, target);
 
         if (source == null || target == null) return node;
 
         for (Map.Entry<String, IFieldDiffCollector<S, T>> entry : entrySet()) {
+            final String fullPath = currentPath + "." + entry.getKey();
             IDiffNode childNode = entry.getValue().collect(comparisonContext, diffNodeFactory, source, target, fullPath);
             if (childNode != null) node.addChild(childNode);
         }

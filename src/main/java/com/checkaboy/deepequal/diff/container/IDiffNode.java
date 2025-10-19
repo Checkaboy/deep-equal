@@ -1,5 +1,6 @@
 package com.checkaboy.deepequal.diff.container;
 
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -16,5 +17,7 @@ public interface IDiffNode {
     List<IDiffNode> getChildren();
 
     void addChild(IDiffNode child);
+
+    void addChildren(Collection<IDiffNode> children);
 
 }
