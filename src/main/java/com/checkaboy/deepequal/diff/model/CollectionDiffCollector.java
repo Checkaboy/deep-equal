@@ -4,8 +4,7 @@ import com.checkaboy.deepequal.context.cache.IComparisonContext;
 import com.checkaboy.deepequal.diff.container.IDiffNode;
 import com.checkaboy.deepequal.diff.container.factory.IDiffNodeFactory;
 import com.checkaboy.deepequal.diff.model.interf.ICollectionDiffCollector;
-import com.checkaboy.deepequal.diff.model.interf.IFieldDiffCollector;
-import com.checkaboy.deepequal.diff.strategy.ICollectionDiffCollectorStrategy;
+import com.checkaboy.deepequal.diff.strategy.collection.ICollectionDiffCollectorStrategy;
 
 import java.util.Collection;
 
@@ -16,11 +15,9 @@ public class CollectionDiffCollector<SC extends Collection<SV>, SV, TC extends C
         implements ICollectionDiffCollector<SC, SV, TC, TV> {
 
     private final ICollectionDiffCollectorStrategy<SC, SV, TC, TV> strategy;
-    private final IFieldDiffCollector<SV, TV> diffCollector;
 
-    public CollectionDiffCollector(ICollectionDiffCollectorStrategy<SC, SV, TC, TV> strategy, IFieldDiffCollector<SV, TV> diffCollector) {
+    public CollectionDiffCollector(ICollectionDiffCollectorStrategy<SC, SV, TC, TV> strategy) {
         this.strategy = strategy;
-        this.diffCollector = diffCollector;
     }
 
     @Override
@@ -30,7 +27,7 @@ public class CollectionDiffCollector<SC extends Collection<SV>, SV, TC extends C
 
         if (source == null || target == null) return node;
 
-        Collection<IDiffNode> diffs = strategy.collect(comparisonContext, diffNodeFactory, source, target, currentPath, diffCollector);
+        Collection<IDiffNode> diffs = strategy.collect(comparisonContext, diffNodeFactory, source, target, currentPath);
 
         if (diffs.isEmpty()) return null;
         else {

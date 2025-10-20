@@ -14,8 +14,8 @@ import java.util.function.Function;
 public class MapComparator<SM extends Map<SK, SV>, SK, SV, TM extends Map<TK, TV>, TK, TV>
         implements IMapComparator<SM, SK, SV, TM, TK, TV> {
 
-    protected final IKeyMatchingStrategy<SK, SV, TK, TV> keyMatchingStrategy;
-    protected final IFieldComparator<SV, TV> comparator;
+    private final IKeyMatchingStrategy<SK, SV, TK, TV> keyMatchingStrategy;
+    private final IFieldComparator<SV, TV> comparator;
 
     public MapComparator(IKeyMatchingStrategy<SK, SV, TK, TV> keyMatchingStrategy, IFieldComparator<SV, TV> comparator) {
         this.keyMatchingStrategy = keyMatchingStrategy;

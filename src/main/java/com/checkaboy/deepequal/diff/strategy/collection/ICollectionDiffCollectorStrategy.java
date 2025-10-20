@@ -1,9 +1,8 @@
-package com.checkaboy.deepequal.diff.strategy;
+package com.checkaboy.deepequal.diff.strategy.collection;
 
 import com.checkaboy.deepequal.context.cache.IComparisonContext;
 import com.checkaboy.deepequal.diff.container.IDiffNode;
 import com.checkaboy.deepequal.diff.container.factory.IDiffNodeFactory;
-import com.checkaboy.deepequal.diff.model.interf.IFieldDiffCollector;
 
 import java.util.Collection;
 
@@ -12,6 +11,6 @@ import java.util.Collection;
  */
 public interface ICollectionDiffCollectorStrategy<SC extends Collection<SV>, SV, TC extends Collection<TV>, TV> {
 
-    Collection<IDiffNode> collect(IComparisonContext comparisonContext, IDiffNodeFactory diffNodeFactory, SC source, TC target, String currentPath, IFieldDiffCollector<SV, TV> diffCollector);
+    Collection<IDiffNode> collect(IComparisonContext comparisonContext, IDiffNodeFactory diffNodeFactory, SC source, TC target, String currentPath);
 
 }
