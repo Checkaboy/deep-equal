@@ -108,19 +108,19 @@ public class BuilderTest {
 
     private IObjectComparator<Car, Car> createCarComparator() {
         ObjectComparatorBuilder<Car, Car> comparatorBuilder = new ObjectComparatorBuilder<>(Car.class, Car.class)
-                .putFieldComparator("carBrand", FieldComparator.simpleFieldComparator(Car::getCarBrand))
-                .putFieldComparator("model", FieldComparator.simpleFieldComparator(Car::getModel))
-                .putFieldComparator("color", FieldComparator.simpleFieldComparator(Car::getColor))
-                .putFieldComparator("doorCount", FieldComparator.simpleFieldComparator(Car::getDoorCount))
+                .putFieldComparator("carBrand", FieldComparator.oneObjectFieldComparator(Car::getCarBrand))
+                .putFieldComparator("model", FieldComparator.oneObjectFieldComparator(Car::getModel))
+                .putFieldComparator("color", FieldComparator.oneObjectFieldComparator(Car::getColor))
+                .putFieldComparator("doorCount", FieldComparator.oneObjectFieldComparator(Car::getDoorCount))
                 .putFieldComparator("engine",
                         new FieldComparatorBuilder<Car, Engine, Car, Engine>(Engine.class, Engine.class)
                                 .setTargetExtractor(Car::getEngine)
                                 .setSourceExtractor(Car::getEngine)
                                 .setComparator(
                                         new ObjectComparatorBuilder<>(Engine.class, Engine.class)
-                                                .putFieldComparator("horsePower", FieldComparator.simpleFieldComparator(Engine::getHorsePower))
-                                                .putFieldComparator("volume", FieldComparator.simpleFieldComparator(Engine::getVolume))
-                                                .putFieldComparator("countCylinder", FieldComparator.simpleFieldComparator(Engine::getCountCylinder))
+                                                .putFieldComparator("horsePower", FieldComparator.oneObjectFieldComparator(Engine::getHorsePower))
+                                                .putFieldComparator("volume", FieldComparator.oneObjectFieldComparator(Engine::getVolume))
+                                                .putFieldComparator("countCylinder", FieldComparator.oneObjectFieldComparator(Engine::getCountCylinder))
                                                 .build())
                                 .build())
                 .putFieldComparator("transmission",
@@ -129,8 +129,8 @@ public class BuilderTest {
                                 .setTargetExtractor(Car::getTransmission)
                                 .setComparator(
                                         new ObjectComparatorBuilder<>(Transmission.class, Transmission.class)
-                                                .putFieldComparator("countSteps", FieldComparator.simpleFieldComparator(Transmission::getCountSteps))
-                                                .putFieldComparator("transmissionType", FieldComparator.simpleFieldComparator(Transmission::getTransmissionType))
+                                                .putFieldComparator("countSteps", FieldComparator.oneObjectFieldComparator(Transmission::getCountSteps))
+                                                .putFieldComparator("transmissionType", FieldComparator.oneObjectFieldComparator(Transmission::getTransmissionType))
                                                 .build())
                                 .build());
 

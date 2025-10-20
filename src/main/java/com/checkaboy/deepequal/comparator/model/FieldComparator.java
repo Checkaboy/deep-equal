@@ -27,12 +27,68 @@ public class FieldComparator<SO, SV, TO, TV>
         return comparator.compare(comparisonContext, sourceExtractor.apply(first), targetExtractor.apply(second));
     }
 
-    public static <O, V> IFieldComparator<O, O> simpleFieldComparator(Function<O, V> extractor) {
-        return new FieldComparator<>(extractor, extractor, (comparisonContext, source, target) -> Objects.equals(source, target));
+    // =================================================================================================================
+
+    public static <S, V> IFieldComparator<S, S> oneObjectFieldComparator(
+            Function<S, V> extractor
+    ) {
+        return oneObjectFieldComparator(extractor, (comparisonContext, source, target) -> Objects.equals(source, target));
     }
 
-    public static <S, T, V> IFieldComparator<S, T> simpleFieldComparator(Function<S, V> sourceExtractor, Function<T, V> targetExtractor) {
-        return new FieldComparator<>(sourceExtractor, targetExtractor, (comparisonContext, source, target) -> Objects.equals(source, target));
+    public static <S, V> IFieldComparator<S, S> oneObjectFieldComparator(
+            Function<S, V> extractor,
+            IFieldComparator<V, V> comparator
+    ) {
+        return new FieldComparator<>(
+                extractor,
+                extractor,
+                comparator
+        );
     }
+
+    // =================================================================================================================
+
+    public static <SO, TO, V> IFieldComparator<SO, TO> doubleObjectFieldComparator(
+            Function<SO, V> sourceExtractor,
+            Function<TO, V> targetExtractor
+    ) {
+        return doubleObjectFieldComparator(sourceExtractor, targetExtractor, (comparisonContext, source, target) -> Objects.equals(source, target));
+    }
+
+    public static <SO, TO, V> IFieldComparator<SO, TO> doubleObjectFieldComparator(
+            Function<SO, V> sourceExtractor,
+            Function<TO, V> targetExtractor,
+            IFieldComparator<V, V> comparator
+    ) {
+        return new FieldComparator<>(
+                sourceExtractor,
+                targetExtractor,
+                comparator
+        );
+    }
+
+    // =================================================================================================================
+
+    public static <SO, SV, TO, TV> IFieldComparator<SO, TO> doubleValueFieldDiffCollector(
+            Function<SO, SV> sourceExtractor,
+            Function<TO, TV> targetExtractor
+    ) {
+        return doubleValueFieldDiffCollector(sourceExtractor, targetExtractor, (comparisonContext, source, target) -> Objects.equals(source, target));
+    }
+
+    public static <SO, SV, TO, TV> IFieldComparator<SO, TO> doubleValueFieldDiffCollector(
+            Function<SO, SV> sourceExtractor,
+            Function<TO, TV> targetExtractor,
+            IFieldComparator<SV, TV> comparator
+    ) {
+        return new FieldComparator<>(
+                sourceExtractor,
+                targetExtractor,
+                comparator
+        );
+    }
+
+    // =================================================================================================================
+
 
 }

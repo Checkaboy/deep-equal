@@ -12,8 +12,6 @@ import java.util.Collection;
 public interface IArrayComparatorBuilder<S, T>
         extends IComparatorBuilder<S[], T[]> {
 
-    IArrayComparatorBuilder<S, T> setStrategy(ICollectionComparisonStrategy<Collection<S>, S, Collection<T>, T> strategy);
-
     IArrayComparatorBuilder<S, T> setStrategy(IArrayComparisonStrategy<S, T> strategy);
 
     IArrayComparatorBuilder<S, T> setComparator(IFieldComparator<S, T> comparator);

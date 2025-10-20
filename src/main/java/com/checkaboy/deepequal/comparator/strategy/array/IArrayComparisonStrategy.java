@@ -1,13 +1,10 @@
 package com.checkaboy.deepequal.comparator.strategy.array;
 
-import com.checkaboy.deepequal.comparator.model.interf.IFieldComparator;
-import com.checkaboy.deepequal.context.cache.IComparisonContext;
+import com.checkaboy.deepequal.comparator.strategy.IClusterComparisonStrategy;
 
 /**
  * @author Taras Shaptala
  */
-public interface IArrayComparisonStrategy<S, T> {
-
-    boolean compareArrays(IComparisonContext comparisonContext, S[] source, T[] target, IFieldComparator<S, T> comparator);
-
+public interface IArrayComparisonStrategy<S, T>
+        extends IClusterComparisonStrategy<S[], S, T[], T> {
 }

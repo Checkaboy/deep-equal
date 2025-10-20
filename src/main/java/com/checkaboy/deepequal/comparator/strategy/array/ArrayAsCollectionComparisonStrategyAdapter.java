@@ -11,17 +11,17 @@ import java.util.List;
 /**
  * @author Taras Shaptala
  */
-public class ArrayComparisonStrategyAdapter<S, T>
+public class ArrayAsCollectionComparisonStrategyAdapter<S, T>
         implements IArrayComparisonStrategy<S, T> {
 
     private final ICollectionComparisonStrategy<Collection<S>, S, Collection<T>, T> collectionStrategy;
 
-    public ArrayComparisonStrategyAdapter(ICollectionComparisonStrategy<Collection<S>, S, Collection<T>, T> collectionStrategy) {
+    public ArrayAsCollectionComparisonStrategyAdapter(ICollectionComparisonStrategy<Collection<S>, S, Collection<T>, T> collectionStrategy) {
         this.collectionStrategy = collectionStrategy;
     }
 
     @Override
-    public boolean compareArrays(IComparisonContext comparisonContext, S[] source, T[] target, IFieldComparator<S, T> comparator) {
+    public boolean compare(IComparisonContext comparisonContext, S[] source, T[] target, IFieldComparator<S, T> comparator) {
         List<S> sourceList = source != null ? Arrays.asList(source) : null;
         List<T> targetList = target != null ? Arrays.asList(target) : null;
         return collectionStrategy.compare(comparisonContext, sourceList, targetList, comparator);

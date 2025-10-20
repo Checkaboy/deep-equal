@@ -31,12 +31,12 @@ public class NullTest {
                 new ObjectComparator<>(authorComparator)
         ));
 
-        authorComparator.put("id", FieldComparator.simpleFieldComparator(AuthorDto::getId));
-        authorComparator.put("firstName", FieldComparator.simpleFieldComparator(AuthorDto::getFirstName));
-        authorComparator.put("lastName", FieldComparator.simpleFieldComparator(AuthorDto::getLastName));
+        authorComparator.put("id", FieldComparator.oneObjectFieldComparator(AuthorDto::getId));
+        authorComparator.put("firstName", FieldComparator.oneObjectFieldComparator(AuthorDto::getFirstName));
+        authorComparator.put("lastName", FieldComparator.oneObjectFieldComparator(AuthorDto::getLastName));
 
-        bookComparator.put("id", FieldComparator.simpleFieldComparator(BookDto::getId));
-        bookComparator.put("name", FieldComparator.simpleFieldComparator(BookDto::getName));
+        bookComparator.put("id", FieldComparator.oneObjectFieldComparator(BookDto::getId));
+        bookComparator.put("name", FieldComparator.oneObjectFieldComparator(BookDto::getName));
 
         AuthorDto full = new AuthorDto(null, null, null, null);
         AuthorDto empty = null;

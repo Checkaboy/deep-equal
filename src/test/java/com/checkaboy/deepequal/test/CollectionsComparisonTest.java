@@ -21,9 +21,9 @@ public class CollectionsComparisonTest {
 
     private ICollectionComparator<List<Pet>, Pet, List<Pet>, Pet> createComparator() {
         IObjectComparator<Pet, Pet> petComparator = new ObjectComparator<>();
-        petComparator.put("nickname", FieldComparator.simpleFieldComparator(Pet::getNickname));
-        petComparator.put("age", FieldComparator.simpleFieldComparator(Pet::getAge));
-        petComparator.put("animal", FieldComparator.simpleFieldComparator(Pet::getAnimal));
+        petComparator.put("nickname", FieldComparator.oneObjectFieldComparator(Pet::getNickname));
+        petComparator.put("age", FieldComparator.oneObjectFieldComparator(Pet::getAge));
+        petComparator.put("animal", FieldComparator.oneObjectFieldComparator(Pet::getAnimal));
         return new CollectionComparator<>(
                 new UnorderedCollectionComparisonStrategy<>(),
                 petComparator

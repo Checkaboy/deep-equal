@@ -25,7 +25,7 @@ public class ArrayComparator<S, T>
         if (source == null || target == null) return false;
         if (source.length != target.length) return false;
 
-        return strategy.compareArrays(comparisonContext, source, target, comparator);
+        return strategy.compare(comparisonContext, source, target, comparator);
     }
 
 }
