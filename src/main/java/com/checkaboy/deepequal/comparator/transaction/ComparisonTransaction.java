@@ -1,6 +1,6 @@
 package com.checkaboy.deepequal.comparator.transaction;
 
-import com.checkaboy.deepequal.comparator.model.interf.IComparator;
+import com.checkaboy.deepequal.comparator.IComparator;
 import com.checkaboy.deepequal.context.cache.IComparisonContext;
 import com.checkaboy.deepequal.context.factory.IComparisonContextFactory;
 

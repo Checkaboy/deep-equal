@@ -3,8 +3,8 @@ package com.checkaboy.deepequal.diff.model;
 import com.checkaboy.deepequal.context.cache.IComparisonContext;
 import com.checkaboy.deepequal.diff.container.IDiffNode;
 import com.checkaboy.deepequal.diff.container.factory.IDiffNodeFactory;
-import com.checkaboy.deepequal.diff.model.interf.IDiffCollector;
 import com.checkaboy.deepequal.diff.model.interf.IFieldDiffCollector;
+import com.checkaboy.deepequal.diff.model.interf.IObjectDiffCollector;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -14,7 +14,7 @@ import java.util.Map;
  */
 public class ObjectDiffCollector<S, T>
         extends HashMap<String, IFieldDiffCollector<S, T>>
-        implements IDiffCollector<S, T> {
+        implements IObjectDiffCollector<S, T> {
 
     public ObjectDiffCollector(int initialCapacity, float loadFactor) {
         super(initialCapacity, loadFactor);

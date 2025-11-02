@@ -1,9 +1,10 @@
 package com.checkaboy.deepequal.test;
 
-import com.checkaboy.deepequal.comparator.model.FieldComparator;
-import com.checkaboy.deepequal.comparator.model.ObjectComparator;
-import com.checkaboy.deepequal.comparator.model.interf.IFieldComparator;
-import com.checkaboy.deepequal.comparator.model.interf.IObjectComparator;
+import com.checkaboy.deepequal.comparator.field.FieldComparator;
+import com.checkaboy.deepequal.comparator.field.builder.FieldComparatorBuilder;
+import com.checkaboy.deepequal.comparator.object.ObjectComparator;
+import com.checkaboy.deepequal.comparator.field.IFieldComparator;
+import com.checkaboy.deepequal.comparator.object.IObjectComparator;
 import com.checkaboy.deepequal.diff.container.DiffNode;
 import com.checkaboy.deepequal.diff.model.FieldDiffCollector;
 import com.checkaboy.deepequal.diff.model.interf.IFieldDiffCollector;
@@ -129,24 +130,24 @@ public class DeepComparisonObjectTest {
     private IFieldComparator<Car, Car> createCarComparator() {
         IObjectComparator<Car, Car> carComparator = new ObjectComparator<>();
 
-        carComparator.put("carBrand", FieldComparator.oneObjectFieldComparator(Car::getCarBrand));
-        carComparator.put("model", FieldComparator.oneObjectFieldComparator(Car::getModel));
-        carComparator.put("color", FieldComparator.oneObjectFieldComparator(Car::getColor));
-        carComparator.put("doorCount", FieldComparator.oneObjectFieldComparator(Car::getDoorCount));
+        carComparator.put("carBrand", FieldComparatorBuilder.oneObjectFieldComparator(Car::getCarBrand));
+        carComparator.put("model", FieldComparatorBuilder.oneObjectFieldComparator(Car::getModel));
+        carComparator.put("color", FieldComparatorBuilder.oneObjectFieldComparator(Car::getColor));
+        carComparator.put("doorCount", FieldComparatorBuilder.oneObjectFieldComparator(Car::getDoorCount));
 
         {
             IObjectComparator<Engine, Engine> engineComparator = new ObjectComparator<>();
-            engineComparator.put("horsePower", FieldComparator.oneObjectFieldComparator(Engine::getHorsePower));
-            engineComparator.put("volume", FieldComparator.oneObjectFieldComparator(Engine::getVolume));
-            engineComparator.put("countCylinder", FieldComparator.oneObjectFieldComparator(Engine::getCountCylinder));
+            engineComparator.put("horsePower", FieldComparatorBuilder.oneObjectFieldComparator(Engine::getHorsePower));
+            engineComparator.put("volume", FieldComparatorBuilder.oneObjectFieldComparator(Engine::getVolume));
+            engineComparator.put("countCylinder", FieldComparatorBuilder.oneObjectFieldComparator(Engine::getCountCylinder));
             FieldComparator<Car, Engine, Car, Engine> comparator = new FieldComparator<>(Car::getEngine, Car::getEngine, engineComparator);
             carComparator.put("engine", comparator);
         }
 
         {
             IObjectComparator<Transmission, Transmission> transmissionComparator = new ObjectComparator<>();
-            transmissionComparator.put("countSteps", FieldComparator.oneObjectFieldComparator(Transmission::getCountSteps));
-            transmissionComparator.put("transmissionType", FieldComparator.oneObjectFieldComparator(Transmission::getTransmissionType));
+            transmissionComparator.put("countSteps", FieldComparatorBuilder.oneObjectFieldComparator(Transmission::getCountSteps));
+            transmissionComparator.put("transmissionType", FieldComparatorBuilder.oneObjectFieldComparator(Transmission::getTransmissionType));
             FieldComparator<Car, Transmission, Car, Transmission> comparator = new FieldComparator<>(Car::getTransmission, Car::getTransmission, transmissionComparator);
             carComparator.put("transmissionType", comparator);
         }

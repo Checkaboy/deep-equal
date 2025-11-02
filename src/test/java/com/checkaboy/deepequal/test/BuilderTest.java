@@ -1,10 +1,10 @@
 package com.checkaboy.deepequal.test;
 
-import com.checkaboy.deepequal.comparator.builder.FieldComparatorBuilder;
-import com.checkaboy.deepequal.comparator.builder.ObjectComparatorBuilder;
-import com.checkaboy.deepequal.comparator.model.FieldComparator;
-import com.checkaboy.deepequal.comparator.model.interf.IFieldComparator;
-import com.checkaboy.deepequal.comparator.model.interf.IObjectComparator;
+import com.checkaboy.deepequal.comparator.field.builder.FieldComparatorBuilder;
+import com.checkaboy.deepequal.comparator.object.builder.ObjectComparatorBuilder;
+import com.checkaboy.deepequal.comparator.field.FieldComparator;
+import com.checkaboy.deepequal.comparator.field.IFieldComparator;
+import com.checkaboy.deepequal.comparator.object.IObjectComparator;
 import com.checkaboy.deepequal.model.car.Car;
 import com.checkaboy.deepequal.model.car.ETransmissionType;
 import com.checkaboy.deepequal.model.car.Engine;
@@ -108,19 +108,19 @@ public class BuilderTest {
 
     private IObjectComparator<Car, Car> createCarComparator() {
         ObjectComparatorBuilder<Car, Car> comparatorBuilder = new ObjectComparatorBuilder<>(Car.class, Car.class)
-                .putFieldComparator("carBrand", FieldComparator.oneObjectFieldComparator(Car::getCarBrand))
-                .putFieldComparator("model", FieldComparator.oneObjectFieldComparator(Car::getModel))
-                .putFieldComparator("color", FieldComparator.oneObjectFieldComparator(Car::getColor))
-                .putFieldComparator("doorCount", FieldComparator.oneObjectFieldComparator(Car::getDoorCount))
+                .putFieldComparator("carBrand", FieldComparatorBuilder.oneObjectFieldComparator(Car::getCarBrand))
+                .putFieldComparator("model", FieldComparatorBuilder.oneObjectFieldComparator(Car::getModel))
+                .putFieldComparator("color", FieldComparatorBuilder.oneObjectFieldComparator(Car::getColor))
+                .putFieldComparator("doorCount", FieldComparatorBuilder.oneObjectFieldComparator(Car::getDoorCount))
                 .putFieldComparator("engine",
                         new FieldComparatorBuilder<Car, Engine, Car, Engine>(Engine.class, Engine.class)
                                 .setTargetExtractor(Car::getEngine)
                                 .setSourceExtractor(Car::getEngine)
                                 .setComparator(
                                         new ObjectComparatorBuilder<>(Engine.class, Engine.class)
-                                                .putFieldComparator("horsePower", FieldComparator.oneObjectFieldComparator(Engine::getHorsePower))
-                                                .putFieldComparator("volume", FieldComparator.oneObjectFieldComparator(Engine::getVolume))
-                                                .putFieldComparator("countCylinder", FieldComparator.oneObjectFieldComparator(Engine::getCountCylinder))
+                                                .putFieldComparator("horsePower", FieldComparatorBuilder.oneObjectFieldComparator(Engine::getHorsePower))
+                                                .putFieldComparator("volume", FieldComparatorBuilder.oneObjectFieldComparator(Engine::getVolume))
+                                                .putFieldComparator("countCylinder", FieldComparatorBuilder.oneObjectFieldComparator(Engine::getCountCylinder))
                                                 .build())
                                 .build())
                 .putFieldComparator("transmission",
@@ -129,8 +129,8 @@ public class BuilderTest {
                                 .setTargetExtractor(Car::getTransmission)
                                 .setComparator(
                                         new ObjectComparatorBuilder<>(Transmission.class, Transmission.class)
-                                                .putFieldComparator("countSteps", FieldComparator.oneObjectFieldComparator(Transmission::getCountSteps))
-                                                .putFieldComparator("transmissionType", FieldComparator.oneObjectFieldComparator(Transmission::getTransmissionType))
+                                                .putFieldComparator("countSteps", FieldComparatorBuilder.oneObjectFieldComparator(Transmission::getCountSteps))
+                                                .putFieldComparator("transmissionType", FieldComparatorBuilder.oneObjectFieldComparator(Transmission::getTransmissionType))
                                                 .build())
                                 .build());
 

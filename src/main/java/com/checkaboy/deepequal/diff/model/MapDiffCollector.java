@@ -1,6 +1,6 @@
 package com.checkaboy.deepequal.diff.model;
 
-import com.checkaboy.deepequal.comparator.model.interf.IFieldComparator;
+import com.checkaboy.deepequal.comparator.field.IFieldComparator;
 import com.checkaboy.deepequal.context.cache.IComparisonContext;
 import com.checkaboy.deepequal.diff.container.IDiffNode;
 import com.checkaboy.deepequal.diff.container.factory.IDiffNodeFactory;

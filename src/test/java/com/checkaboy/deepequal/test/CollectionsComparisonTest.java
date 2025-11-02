@@ -1,11 +1,12 @@
 package com.checkaboy.deepequal.test;
 
-import com.checkaboy.deepequal.comparator.model.CollectionComparator;
-import com.checkaboy.deepequal.comparator.model.FieldComparator;
-import com.checkaboy.deepequal.comparator.model.ObjectComparator;
-import com.checkaboy.deepequal.comparator.model.interf.ICollectionComparator;
-import com.checkaboy.deepequal.comparator.model.interf.IObjectComparator;
-import com.checkaboy.deepequal.comparator.strategy.collection.UnorderedCollectionComparisonStrategy;
+import com.checkaboy.deepequal.comparator.collection.CollectionComparator;
+import com.checkaboy.deepequal.comparator.field.FieldComparator;
+import com.checkaboy.deepequal.comparator.field.builder.FieldComparatorBuilder;
+import com.checkaboy.deepequal.comparator.object.ObjectComparator;
+import com.checkaboy.deepequal.comparator.collection.ICollectionComparator;
+import com.checkaboy.deepequal.comparator.object.IObjectComparator;
+import com.checkaboy.deepequal.comparator.collection.strategy.UnorderedCollectionComparisonStrategy;
 import com.checkaboy.deepequal.model.pet.EAnimal;
 import com.checkaboy.deepequal.model.pet.Pet;
 import org.junit.Assert;
@@ -21,9 +22,9 @@ public class CollectionsComparisonTest {
 
     private ICollectionComparator<List<Pet>, Pet, List<Pet>, Pet> createComparator() {
         IObjectComparator<Pet, Pet> petComparator = new ObjectComparator<>();
-        petComparator.put("nickname", FieldComparator.oneObjectFieldComparator(Pet::getNickname));
-        petComparator.put("age", FieldComparator.oneObjectFieldComparator(Pet::getAge));
-        petComparator.put("animal", FieldComparator.oneObjectFieldComparator(Pet::getAnimal));
+        petComparator.put("nickname", FieldComparatorBuilder.oneObjectFieldComparator(Pet::getNickname));
+        petComparator.put("age", FieldComparatorBuilder.oneObjectFieldComparator(Pet::getAge));
+        petComparator.put("animal", FieldComparatorBuilder.oneObjectFieldComparator(Pet::getAnimal));
         return new CollectionComparator<>(
                 new UnorderedCollectionComparisonStrategy<>(),
                 petComparator

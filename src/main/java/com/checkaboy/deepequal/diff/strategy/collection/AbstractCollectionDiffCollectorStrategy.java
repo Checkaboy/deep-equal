@@ -1,6 +1,6 @@
 package com.checkaboy.deepequal.diff.strategy.collection;
 
-import com.checkaboy.deepequal.comparator.model.interf.IFieldComparator;
+import com.checkaboy.deepequal.comparator.field.IFieldComparator;
 import com.checkaboy.deepequal.diff.container.IDiffNode;
 
 import java.util.Collection;
