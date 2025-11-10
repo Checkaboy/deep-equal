@@ -2,6 +2,7 @@ package com.checkaboy.deepequal.comparator.map.strategy;
 
 import com.checkaboy.deepequal.comparator.collection.strategy.UniqueElementsCollectionComparisonStrategy;
 
+import java.util.Collection;
 import java.util.Map;
 
 /**
@@ -11,8 +12,12 @@ public class UniqueElementsMapComparisonStrategy<SM extends Map<SK, SV>, SK, SV,
         extends MapAsCollectionComparisonStrategyAdapter<SM, SK, SV, TM, TK, TV>
         implements IMapComparisonStrategy<SM, SK, SV, TM, TK, TV> {
 
+    public UniqueElementsMapComparisonStrategy(UniqueElementsCollectionComparisonStrategy<Collection<SV>, SV, Collection<TV>, TV> strategy) {
+        super(strategy);
+    }
+
     public UniqueElementsMapComparisonStrategy() {
-        super(new UniqueElementsCollectionComparisonStrategy<>());
+        this(new UniqueElementsCollectionComparisonStrategy<>());
     }
 
 }

@@ -24,6 +24,11 @@ public class ArrayAsCollectionComparisonStrategyAdapter<S, T>
     public boolean compare(IComparisonContext comparisonContext, S[] source, T[] target, IFieldComparator<S, T> comparator) {
         List<S> sourceList = source != null ? Arrays.asList(source) : null;
         List<T> targetList = target != null ? Arrays.asList(target) : null;
+
+        if (sourceList == null && targetList == null) return true;
+        if (sourceList == null || targetList == null) return false;
+        if (sourceList.size() != targetList.size()) return false;
+
         return collectionStrategy.compare(comparisonContext, sourceList, targetList, comparator);
     }
 

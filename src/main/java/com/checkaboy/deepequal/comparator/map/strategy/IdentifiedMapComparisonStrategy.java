@@ -21,8 +21,10 @@ public class IdentifiedMapComparisonStrategy<SM extends Map<SK, SV>, SK, SV, TM 
     @Override
     public boolean compare(IComparisonContext comparisonContext, SM source, TM target, IFieldComparator<SV, TV> comparator) {
         for (Map.Entry<SK, SV> entry : source.entrySet()) {
-            TV targetValue = target.get(keyCaster.apply(entry.getKey()));
-            if (!comparator.compare(comparisonContext, entry.getValue(), targetValue))
+            SV sourceValue = entry.getValue();
+            SK sourceKey = entry.getKey();
+            TV targetValue = target.get(keyCaster.apply(sourceKey));
+            if (!comparator.compare(comparisonContext, sourceValue, targetValue))
                 return false;
         }
 

@@ -1,7 +1,7 @@
 package com.checkaboy.deepequal.comparator.map.strategy;
 
-import com.checkaboy.deepequal.comparator.field.IFieldComparator;
 import com.checkaboy.deepequal.comparator.collection.strategy.ICollectionComparisonStrategy;
+import com.checkaboy.deepequal.comparator.field.IFieldComparator;
 import com.checkaboy.deepequal.context.cache.IComparisonContext;
 
 import java.util.Collection;
@@ -21,7 +21,12 @@ public class MapAsCollectionComparisonStrategyAdapter<SM extends Map<SK, SV>, SK
 
     @Override
     public boolean compare(IComparisonContext comparisonContext, SM source, TM target, IFieldComparator<SV, TV> comparator) {
-        return comparisonStrategy.compare(comparisonContext, source.values(), target.values(), comparator);
+        Collection<SV> sourceCollection = source.values();
+        Collection<TV> targetCollection = target.values();
+
+        if (source.size() != target.size()) return false;
+
+        return comparisonStrategy.compare(comparisonContext, sourceCollection, targetCollection, comparator);
     }
 
 }

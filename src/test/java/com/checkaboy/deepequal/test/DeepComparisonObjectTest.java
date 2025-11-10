@@ -1,13 +1,13 @@
 package com.checkaboy.deepequal.test;
 
 import com.checkaboy.deepequal.comparator.field.FieldComparator;
-import com.checkaboy.deepequal.comparator.field.builder.FieldComparatorBuilder;
-import com.checkaboy.deepequal.comparator.object.ObjectComparator;
 import com.checkaboy.deepequal.comparator.field.IFieldComparator;
+import com.checkaboy.deepequal.comparator.field.builder.FieldComparatorBuilder;
 import com.checkaboy.deepequal.comparator.object.IObjectComparator;
+import com.checkaboy.deepequal.comparator.object.ObjectComparator;
 import com.checkaboy.deepequal.diff.container.DiffNode;
-import com.checkaboy.deepequal.diff.model.FieldDiffCollector;
-import com.checkaboy.deepequal.diff.model.interf.IFieldDiffCollector;
+import com.checkaboy.deepequal.diff.field.IFieldDiffCollector;
+import com.checkaboy.deepequal.diff.field.builder.FieldDiffCollectorBuilder;
 import com.checkaboy.deepequal.model.car.Car;
 import com.checkaboy.deepequal.model.car.ETransmissionType;
 import com.checkaboy.deepequal.model.car.Engine;
@@ -55,7 +55,7 @@ public class DeepComparisonObjectTest {
         carMercedesAMG63.setCarBrand("Mercedes");
         carMercedesAMG63.setModel("AMG 63");
 
-        IFieldDiffCollector<Car, Car> fieldDiffCollector = FieldDiffCollector.oneObjectFieldDiffCollector("carBranch", Car::getCarBrand);
+        IFieldDiffCollector<Car, Car> fieldDiffCollector = FieldDiffCollectorBuilder.oneObjectFieldDiffCollector("carBranch", Car::getCarBrand);
         System.out.println(fieldDiffCollector.collect(null, DiffNode::new, carBmvI3, carBmvI8, "Car"));
         System.out.println(fieldDiffCollector.collect(null, DiffNode::new, carBmvI3, carMercedesAMG63, "Car"));
     }
