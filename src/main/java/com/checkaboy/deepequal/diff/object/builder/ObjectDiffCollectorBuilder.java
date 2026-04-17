@@ -17,7 +17,7 @@ public class ObjectDiffCollectorBuilder<S, T>
 
     private Map<String, IFieldDiffCollector<S, T>> fieldDiffCollectorMap = new HashMap<>();
 
-    protected ObjectDiffCollectorBuilder(Class<S> sourceType, Class<T> targetType) {
+    public ObjectDiffCollectorBuilder(Class<S> sourceType, Class<T> targetType) {
         super(sourceType, targetType);
     }
 

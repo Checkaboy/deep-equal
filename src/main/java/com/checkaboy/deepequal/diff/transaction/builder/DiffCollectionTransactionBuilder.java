@@ -19,7 +19,7 @@ public class DiffCollectionTransactionBuilder<S, T>
     private IDiffNodeFactory diffNodeFactory;
     private String rootName;
 
-    protected DiffCollectionTransactionBuilder(Class<S> sourceType, Class<T> targetType) {
+    public DiffCollectionTransactionBuilder(Class<S> sourceType, Class<T> targetType) {
         super(sourceType, targetType);
     }
 

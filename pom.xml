@@ -31,6 +31,12 @@
         </dependency>
 
         <dependency>
+            <groupId>com.github.Checkaboy</groupId>
+            <artifactId>object-descriptor</artifactId>
+            <version>0.1.ALPHA</version>
+        </dependency>
+
+        <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>4.13.2</version>
