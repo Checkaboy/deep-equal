@@ -17,24 +17,24 @@ public class ObjectComparatorBuilder<S, T>
 
     private Map<String, IFieldComparator<S, T>> fieldComparatorMap = new HashMap<>();
 
-    public ObjectComparatorBuilder(Class<S> sourceClass, Class<T> targetClass) {
+    protected ObjectComparatorBuilder(Class<S> sourceClass, Class<T> targetClass) {
         super(sourceClass, targetClass);
     }
 
     @Override
-    public ObjectComparatorBuilder<S, T> setFieldComparators(Map<String, IFieldComparator<S, T>> fieldComparatorMap) {
+    public ObjectComparatorBuilder<S, T> set(Map<String, IFieldComparator<S, T>> fieldComparatorMap) {
         this.fieldComparatorMap = fieldComparatorMap;
         return this;
     }
 
     @Override
-    public ObjectComparatorBuilder<S, T> putFieldComparator(String fieldName, IFieldComparator<S, T> fieldComparator) {
+    public ObjectComparatorBuilder<S, T> put(String fieldName, IFieldComparator<S, T> fieldComparator) {
         fieldComparatorMap.put(fieldName, fieldComparator);
         return this;
     }
 
     @Override
-    public ObjectComparatorBuilder<S, T> putAllFieldComparators(Map<String, IFieldComparator<S, T>> fieldComparatorMap) {
+    public ObjectComparatorBuilder<S, T> putAll(Map<String, IFieldComparator<S, T>> fieldComparatorMap) {
         this.fieldComparatorMap.putAll(fieldComparatorMap);
         return this;
     }
@@ -42,6 +42,10 @@ public class ObjectComparatorBuilder<S, T>
     @Override
     public IObjectComparator<S, T> build() {
         return new ObjectComparator<>(fieldComparatorMap);
+    }
+
+    public static <S, T> ObjectComparatorBuilder<S, T> of(Class<S> sourceClass, Class<T> targetClass) {
+        return new ObjectComparatorBuilder<>(sourceClass, targetClass);
     }
 
 }

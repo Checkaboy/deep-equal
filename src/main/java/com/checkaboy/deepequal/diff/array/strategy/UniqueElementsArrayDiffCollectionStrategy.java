@@ -18,7 +18,7 @@ public class UniqueElementsArrayDiffCollectionStrategy<S, T>
         super(collectorStrategy);
     }
 
-    protected UniqueElementsArrayDiffCollectionStrategy(Supplier<Collection<IDiffNode>> constructor, IFieldComparator<S, T> comparator) {
+    public UniqueElementsArrayDiffCollectionStrategy(Supplier<Collection<IDiffNode>> constructor, IFieldComparator<S, T> comparator) {
         this(new UniqueElementsCollectionDiffCollectionStrategy<>(constructor, comparator));
     }
 

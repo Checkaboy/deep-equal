@@ -1,9 +1,9 @@
 package com.checkaboy.deepequal.comparator.transaction.builder;
 
-import com.checkaboy.deepequal.IBuilder;
 import com.checkaboy.deepequal.comparator.IComparator;
 import com.checkaboy.deepequal.comparator.transaction.IComparisonTransaction;
 import com.checkaboy.deepequal.context.factory.IComparisonContextFactory;
+import com.checkaboy.objectutils.model.IBuilder;
 
 /**
  * @author Taras Shaptala

@@ -37,4 +37,8 @@ public class CollectionDiffCollectorBuilder<SC extends Collection<SV>, SV, TC ex
         return new CollectionDiffCollector<>(strategy);
     }
 
+    public static <SV, TV> CollectionDiffCollectorBuilder<Collection<SV>, SV, Collection<TV>, TV> of(Class<SV> sourceType, Class<TV> targetType) {
+        return new CollectionDiffCollectorBuilder<>(sourceType, targetType);
+    }
+
 }

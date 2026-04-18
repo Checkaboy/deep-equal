@@ -1,8 +1,8 @@
 package com.checkaboy.deepequal.diff.array.builder;
 
-import com.checkaboy.deepequal.IBuilder;
 import com.checkaboy.deepequal.diff.IDiffCollector;
 import com.checkaboy.deepequal.diff.array.strategy.IArrayDiffCollectionStrategy;
+import com.checkaboy.objectutils.model.IBuilder;
 
 /**
  * @author Taras Shaptala

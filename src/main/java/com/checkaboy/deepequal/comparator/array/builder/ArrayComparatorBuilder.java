@@ -19,7 +19,7 @@ public class ArrayComparatorBuilder<S, T>
     private IArrayComparisonStrategy<S, T> strategy = new UnorderedArrayComparisonStrategy<>();
     private IFieldComparator<S, T> comparator = (comparisonContext, source, target) -> Objects.equals(source, target);
 
-    public ArrayComparatorBuilder(Class<S> sourceType, Class<T> targetType) {
+    protected ArrayComparatorBuilder(Class<S> sourceType, Class<T> targetType) {
         super(sourceType, targetType);
     }
 
@@ -38,6 +38,10 @@ public class ArrayComparatorBuilder<S, T>
     @Override
     public IArrayComparator<S, T> build() {
         return new ArrayComparator<>(strategy, comparator);
+    }
+
+    public static <S, T> ArrayComparatorBuilder<S, T> of(Class<S> sourceType, Class<T> targetType) {
+        return new ArrayComparatorBuilder<>(sourceType, targetType);
     }
 
 }

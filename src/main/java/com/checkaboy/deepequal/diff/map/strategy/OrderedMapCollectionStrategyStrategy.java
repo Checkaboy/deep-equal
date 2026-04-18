@@ -15,8 +15,6 @@ public class OrderedMapCollectionStrategyStrategy<SM extends Map<SK, SV>, SK, SV
         extends MapAsCollectionDifCollectionStrategyAdapter<SM, SK, SV, TM, TK, TV>
         implements IMapDiffCollectionStrategy<SM, SK, SV, TM, TK, TV> {
 
-
-
     public OrderedMapCollectionStrategyStrategy(OrderedCollectionDiffCollectionStrategy<Collection<SV>, SV, Collection<TV>, TV> collectorStrategy) {
         super(collectorStrategy);
     }

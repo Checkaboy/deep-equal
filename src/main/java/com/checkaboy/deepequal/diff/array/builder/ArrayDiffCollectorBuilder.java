@@ -36,4 +36,8 @@ public class ArrayDiffCollectorBuilder<S, T>
         return new ArrayDiffCollector<>(strategy);
     }
 
+    public static <S, T> ArrayDiffCollectorBuilder<S, T> of(Class<S> sourceType, Class<T> targetType) {
+        return new ArrayDiffCollectorBuilder<>(sourceType, targetType);
+    }
+
 }

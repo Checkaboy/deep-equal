@@ -1,10 +1,10 @@
 package com.checkaboy.deepequal.diff.transaction.builder;
 
-import com.checkaboy.deepequal.IBuilder;
 import com.checkaboy.deepequal.context.factory.IComparisonContextFactory;
 import com.checkaboy.deepequal.diff.IDiffCollector;
 import com.checkaboy.deepequal.diff.container.factory.IDiffNodeFactory;
 import com.checkaboy.deepequal.diff.transaction.IDiffCollectionTransaction;
+import com.checkaboy.objectutils.model.IBuilder;
 
 /**
  * @author Taras Shaptala

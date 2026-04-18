@@ -1,9 +1,9 @@
 package com.checkaboy.deepequal.comparator.map.builder;
 
-import com.checkaboy.deepequal.IBuilder;
 import com.checkaboy.deepequal.comparator.IComparator;
 import com.checkaboy.deepequal.comparator.field.IFieldComparator;
 import com.checkaboy.deepequal.comparator.map.strategy.IMapComparisonStrategy;
+import com.checkaboy.objectutils.model.IBuilder;
 
 import java.util.Map;
 

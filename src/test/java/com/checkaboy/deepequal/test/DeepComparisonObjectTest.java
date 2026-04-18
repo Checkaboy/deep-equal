@@ -55,7 +55,7 @@ public class DeepComparisonObjectTest {
         carMercedesAMG63.setCarBrand("Mercedes");
         carMercedesAMG63.setModel("AMG 63");
 
-        IFieldDiffCollector<Car, Car> fieldDiffCollector = FieldDiffCollectorBuilder.oneObjectFieldDiffCollector("carBranch", Car::getCarBrand);
+        IFieldDiffCollector<Car, Car> fieldDiffCollector = FieldDiffCollectorBuilder.oneObjectFieldDiffCollector(/*"carBranch",*/ Car::getCarBrand);
         System.out.println(fieldDiffCollector.collect(null, DiffNode::new, carBmvI3, carBmvI8, "Car"));
         System.out.println(fieldDiffCollector.collect(null, DiffNode::new, carBmvI3, carMercedesAMG63, "Car"));
     }

@@ -27,7 +27,7 @@ public class ComparisonTransactionBuilder<S, T>
     private IComparisonContextFactory comparisonContextFactory = ComparisonContext::new;
     private IComparator<S, T> comparator;
 
-    public ComparisonTransactionBuilder(Class<S> sourceType, Class<T> targetType) {
+    protected ComparisonTransactionBuilder(Class<S> sourceType, Class<T> targetType) {
         super(sourceType, targetType);
     }
 
@@ -46,6 +46,10 @@ public class ComparisonTransactionBuilder<S, T>
     @Override
     public IComparisonTransaction<S, T> build() {
         return new ComparisonTransaction<>(comparator, comparisonContextFactory);
+    }
+
+    public static <S, T> ComparisonTransactionBuilder<S, T> of(Class<S> sourceType, Class<T> targetType) {
+        return new ComparisonTransactionBuilder<>(sourceType, targetType);
     }
 
 }

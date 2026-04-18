@@ -17,24 +17,24 @@ public class ObjectDiffCollectorBuilder<S, T>
 
     private Map<String, IFieldDiffCollector<S, T>> fieldDiffCollectorMap = new HashMap<>();
 
-    public ObjectDiffCollectorBuilder(Class<S> sourceType, Class<T> targetType) {
+    protected ObjectDiffCollectorBuilder(Class<S> sourceType, Class<T> targetType) {
         super(sourceType, targetType);
     }
 
     @Override
-    public ObjectDiffCollectorBuilder<S, T> setFieldComparators(Map<String, IFieldDiffCollector<S, T>> fieldDiffCollectorMap) {
+    public ObjectDiffCollectorBuilder<S, T> set(Map<String, IFieldDiffCollector<S, T>> fieldDiffCollectorMap) {
         this.fieldDiffCollectorMap = fieldDiffCollectorMap;
         return this;
     }
 
     @Override
-    public ObjectDiffCollectorBuilder<S, T> putFieldComparator(String fieldName, IFieldDiffCollector<S, T> fieldDiffCollector) {
+    public ObjectDiffCollectorBuilder<S, T> put(String fieldName, IFieldDiffCollector<S, T> fieldDiffCollector) {
         fieldDiffCollectorMap.put(fieldName, fieldDiffCollector);
         return this;
     }
 
     @Override
-    public ObjectDiffCollectorBuilder<S, T> putAllFieldComparators(Map<String, IFieldDiffCollector<S, T>> fieldDiffCollectorMap) {
+    public ObjectDiffCollectorBuilder<S, T> putAll(Map<String, IFieldDiffCollector<S, T>> fieldDiffCollectorMap) {
         this.fieldDiffCollectorMap.putAll(fieldDiffCollectorMap);
         return this;
     }
@@ -42,6 +42,10 @@ public class ObjectDiffCollectorBuilder<S, T>
     @Override
     public IObjectDiffCollector<S, T> build() {
         return new ObjectDiffCollector<>(fieldDiffCollectorMap);
+    }
+
+    public static <S, T> ObjectDiffCollectorBuilder<S, T> of(Class<S> sourceType, Class<T> targetType) {
+        return new ObjectDiffCollectorBuilder<>(sourceType, targetType);
     }
 
 }

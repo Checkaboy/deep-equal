@@ -1,11 +1,14 @@
 package com.checkaboy.deepequal.diff.field.builder;
 
 import com.checkaboy.deepequal.comparator.field.IFieldComparator;
-import com.checkaboy.deepequal.diff.IDiffCollector;
+import com.checkaboy.deepequal.diff.collection.ICollectionDiffCollector;
 import com.checkaboy.deepequal.diff.field.FieldDiffCollector;
 import com.checkaboy.deepequal.diff.field.IFieldDiffCollector;
-import com.checkaboy.objectutils.container.AbstractBiTypifiedContainer;
+import com.checkaboy.deepequal.diff.map.IMapDiffCollector;
+import com.checkaboy.objectutils.container.Abstract4TypifiedContainer;
 
+import java.util.Collection;
+import java.util.Map;
 import java.util.Objects;
 import java.util.function.Function;
 
@@ -13,21 +16,15 @@ import java.util.function.Function;
  * @author Taras Shaptala
  */
 public class FieldDiffCollectorBuilder<SO, SV, TO, TV>
-        extends AbstractBiTypifiedContainer<SV, TV>
+        extends Abstract4TypifiedContainer<SO, SV, TO, TV>
         implements IFieldDiffCollectorBuilder<SO, SV, TO, TV> {
 
-    private String fieldName = "";
     private Function<SO, SV> sourceExtractor = s -> null;
     private Function<TO, TV> targetExtractor = t -> null;
     private IFieldDiffCollector<SV, TV> diffCollector = (comparisonContext, diffNodeFactory, source, target, currentPath) -> null;
 
-    public FieldDiffCollectorBuilder(Class<SV> sourceType, Class<TV> targetType) {
-        super(sourceType, targetType);
-    }
-
-    public FieldDiffCollectorBuilder<SO, SV, TO, TV> setFieldName(String fieldName) {
-        this.fieldName = fieldName;
-        return this;
+    protected FieldDiffCollectorBuilder(Class<SO> sourceObjectType, Class<SV> sourceValueType, Class<TO> targetObjectType, Class<TV> targetValueType) {
+        super(sourceObjectType, sourceValueType, targetObjectType, targetValueType);
     }
 
     @Override
@@ -49,26 +46,23 @@ public class FieldDiffCollectorBuilder<SO, SV, TO, TV>
     }
 
     @Override
-    public IDiffCollector<SO, TO> build() {
-        return new FieldDiffCollector<>(fieldName, sourceExtractor, targetExtractor, diffCollector);
+    public IFieldDiffCollector<SO, TO> build() {
+        return new FieldDiffCollector<>(/*fieldName, */sourceExtractor, targetExtractor, diffCollector);
     }
 
     // =================================================================================================================
 
     public static <S, V> IFieldDiffCollector<S, S> oneObjectFieldDiffCollector(
-            String fieldName,
             Function<S, V> extractor
     ) {
-        return oneObjectFieldDiffCollector(fieldName, extractor, (comparisonContext, source, target) -> Objects.equals(source, target));
+        return oneObjectFieldDiffCollector(extractor, (comparisonContext, source, target) -> Objects.equals(source, target));
     }
 
     public static <S, V> IFieldDiffCollector<S, S> oneObjectFieldDiffCollector(
-            String fieldName,
             Function<S, V> extractor,
             IFieldComparator<V, V> comparator
     ) {
         return new FieldDiffCollector<>(
-                fieldName,
                 extractor,
                 extractor,
                 (comparisonContext, diffNodeFactory, source, target, currentPath) -> {
@@ -82,21 +76,18 @@ public class FieldDiffCollectorBuilder<SO, SV, TO, TV>
     // =================================================================================================================
 
     public static <SO, TO, V> IFieldDiffCollector<SO, TO> doubleObjectFieldDiffCollector(
-            String fieldName,
             Function<SO, V> sourceExtractor,
             Function<TO, V> targetExtractor
     ) {
-        return doubleObjectFieldDiffCollector(fieldName, sourceExtractor, targetExtractor, (comparisonContext, source, target) -> Objects.equals(source, target));
+        return doubleObjectFieldDiffCollector(sourceExtractor, targetExtractor, (comparisonContext, source, target) -> Objects.equals(source, target));
     }
 
     public static <SO, TO, V> IFieldDiffCollector<SO, TO> doubleObjectFieldDiffCollector(
-            String fieldName,
             Function<SO, V> sourceExtractor,
             Function<TO, V> targetExtractor,
             IFieldComparator<V, V> comparator
     ) {
         return new FieldDiffCollector<>(
-                fieldName,
                 sourceExtractor,
                 targetExtractor,
                 (comparisonContext, diffNodeFactory, source, target, currentPath) -> {
@@ -110,21 +101,18 @@ public class FieldDiffCollectorBuilder<SO, SV, TO, TV>
     // =================================================================================================================
 
     public static <SO, SV, TO, TV> IFieldDiffCollector<SO, TO> doubleValueFieldDiffCollector(
-            String fieldName,
             Function<SO, SV> sourceExtractor,
             Function<TO, TV> targetExtractor
     ) {
-        return doubleValueFieldDiffCollector(fieldName, sourceExtractor, targetExtractor, (comparisonContext, source, target) -> Objects.equals(source, target));
+        return doubleValueFieldDiffCollector(sourceExtractor, targetExtractor, (comparisonContext, source, target) -> Objects.equals(source, target));
     }
 
     public static <SO, SV, TO, TV> IFieldDiffCollector<SO, TO> doubleValueFieldDiffCollector(
-            String fieldName,
             Function<SO, SV> sourceExtractor,
             Function<TO, TV> targetExtractor,
             IFieldComparator<SV, TV> comparator
     ) {
         return new FieldDiffCollector<>(
-                fieldName,
                 sourceExtractor,
                 targetExtractor,
                 (comparisonContext, diffNodeFactory, source, target, currentPath) -> {
@@ -133,6 +121,40 @@ public class FieldDiffCollectorBuilder<SO, SV, TO, TV>
                     else return null;
                 }
         );
+    }
+
+    // =================================================================================================================
+
+    public static <SO, SV, TO, TV> IFieldDiffCollector<SO, TO> wrap(
+            Function<SO, Collection<SV>> sourceExtractor,
+            Function<TO, Collection<TV>> targetExtractor,
+            ICollectionDiffCollector<Collection<SV>, SV, Collection<TV>, TV> collectionDiffCollector
+    ) {
+        return new FieldDiffCollector<>(
+                sourceExtractor,
+                targetExtractor,
+                collectionDiffCollector
+        );
+    }
+
+    public static <SO, SK, SV, TO, TK, TV> IFieldDiffCollector<SO, TO> wrap(
+            Function<SO, Map<SK, SV>> sourceExtractor,
+            Function<TO, Map<TK, TV>> targetExtractor,
+            IMapDiffCollector<Map<SK, SV>, SK, SV, Map<TK, TV>, TK, TV> mapDiffCollector
+    ) {
+        return new FieldDiffCollector<>(
+                sourceExtractor,
+                targetExtractor,
+                mapDiffCollector
+        );
+    }
+
+    // =================================================================================================================
+
+    public static <SO, SV, TO, TV> FieldDiffCollectorBuilder<SO, SV, TO, TV> of(
+            Class<SO> sourceObjectType, Class<SV> sourceValueType, Class<TO> targetObjectType, Class<TV> targetValueType
+    ) {
+        return new FieldDiffCollectorBuilder<>(sourceObjectType, sourceValueType, targetObjectType, targetValueType);
     }
 
     // =================================================================================================================

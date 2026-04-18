@@ -15,7 +15,7 @@ public abstract class AbstractCollectionDiffCollectionStrategy<SC extends Collec
     protected final Supplier<Collection<IDiffNode>> constructor;
     protected final IFieldComparator<SV, TV> comparator;
 
-    protected AbstractCollectionDiffCollectionStrategy(Supplier<Collection<IDiffNode>> constructor, IFieldComparator<SV, TV> comparator) {
+    public AbstractCollectionDiffCollectionStrategy(Supplier<Collection<IDiffNode>> constructor, IFieldComparator<SV, TV> comparator) {
         this.constructor = constructor;
         this.comparator = comparator;
     }

@@ -20,7 +20,7 @@ public class ListComparatorBuilder<SV, TV>
     private ICollectionComparisonStrategy<List<SV>, SV, List<TV>, TV> strategy = new UnorderedCollectionComparisonStrategy<>();
     private IFieldComparator<SV, TV> comparator = (comparisonContext, source, target) -> Objects.equals(source, target);
 
-    public ListComparatorBuilder(Class<SV> sourceType, Class<TV> targetType) {
+    protected ListComparatorBuilder(Class<SV> sourceType, Class<TV> targetType) {
         super(sourceType, targetType);
     }
 
@@ -39,6 +39,10 @@ public class ListComparatorBuilder<SV, TV>
     @Override
     public ICollectionComparator<List<SV>, SV, List<TV>, TV> build() {
         return new CollectionComparator<>(strategy, comparator);
+    }
+
+    public static <SV, TV> ListComparatorBuilder<SV, TV> of(Class<SV> sourceType, Class<TV> targetType) {
+        return new ListComparatorBuilder<>(sourceType, targetType);
     }
 
 }

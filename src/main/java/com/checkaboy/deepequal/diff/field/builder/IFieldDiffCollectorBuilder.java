@@ -1,8 +1,8 @@
 package com.checkaboy.deepequal.diff.field.builder;
 
-import com.checkaboy.deepequal.IBuilder;
 import com.checkaboy.deepequal.diff.IDiffCollector;
 import com.checkaboy.deepequal.diff.field.IFieldDiffCollector;
+import com.checkaboy.objectutils.model.IBuilder;
 
 import java.util.function.Function;
 
@@ -10,7 +10,7 @@ import java.util.function.Function;
  * @author Taras Shaptala
  */
 public interface IFieldDiffCollectorBuilder<SO, SV, TO, TV>
-        extends IBuilder<IDiffCollector<SO, TO>> {
+        extends IBuilder<IFieldDiffCollector<SO, TO>> {
 
     IFieldDiffCollectorBuilder<SO, SV, TO, TV> setSourceExtractor(Function<SO, SV> extractor);
 

@@ -1,8 +1,8 @@
 package com.checkaboy.deepequal.diff.map.builder;
 
-import com.checkaboy.deepequal.IBuilder;
 import com.checkaboy.deepequal.diff.IDiffCollector;
 import com.checkaboy.deepequal.diff.map.strategy.IMapDiffCollectionStrategy;
+import com.checkaboy.objectutils.model.IBuilder;
 
 import java.util.Map;
 

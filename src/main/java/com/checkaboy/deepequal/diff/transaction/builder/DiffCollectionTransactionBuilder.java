@@ -19,7 +19,7 @@ public class DiffCollectionTransactionBuilder<S, T>
     private IDiffNodeFactory diffNodeFactory;
     private String rootName;
 
-    public DiffCollectionTransactionBuilder(Class<S> sourceType, Class<T> targetType) {
+    protected DiffCollectionTransactionBuilder(Class<S> sourceType, Class<T> targetType) {
         super(sourceType, targetType);
     }
 
@@ -49,8 +49,14 @@ public class DiffCollectionTransactionBuilder<S, T>
 
     @Override
     public IDiffCollectionTransaction<S, T> build() {
-        if(rootName == null) return new DiffCollectionTransaction<>(diffCollector, comparisonContextFactory, diffNodeFactory);
-        else return new DiffCollectionTransaction<>(diffCollector, comparisonContextFactory, diffNodeFactory, rootName);
+        if (rootName == null)
+            return new DiffCollectionTransaction<>(diffCollector, comparisonContextFactory, diffNodeFactory);
+        else
+            return new DiffCollectionTransaction<>(diffCollector, comparisonContextFactory, diffNodeFactory, rootName);
+    }
+
+    public static <S, T> DiffCollectionTransactionBuilder<S, T> of(Class<S> sourceType, Class<T> targetType) {
+        return new DiffCollectionTransactionBuilder<>(sourceType, targetType);
     }
 
 }

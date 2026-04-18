@@ -1,8 +1,8 @@
 package com.checkaboy.deepequal.comparator.field.builder;
 
-import com.checkaboy.deepequal.IBuilder;
 import com.checkaboy.deepequal.comparator.IComparator;
 import com.checkaboy.deepequal.comparator.field.IFieldComparator;
+import com.checkaboy.objectutils.model.IBuilder;
 
 import java.util.function.Function;
 
