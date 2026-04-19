@@ -30,7 +30,7 @@ public class MapDiffCollector<SM extends Map<SK, SV>, SK, SV, TM extends Map<TK,
 
         Collection<IDiffNode> diffs = strategy.collect(comparisonContext, diffNodeFactory, source, target, currentPath);
 
-        if (diffs.isEmpty()) return null;
+        if (diffs == null) return null;
         else {
             node.addChildren(diffs);
             return node;

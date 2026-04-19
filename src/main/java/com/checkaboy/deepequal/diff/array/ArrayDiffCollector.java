@@ -1,9 +1,9 @@
 package com.checkaboy.deepequal.diff.array;
 
 import com.checkaboy.deepequal.context.cache.IComparisonContext;
+import com.checkaboy.deepequal.diff.array.strategy.IArrayDiffCollectionStrategy;
 import com.checkaboy.deepequal.diff.container.IDiffNode;
 import com.checkaboy.deepequal.diff.container.factory.IDiffNodeFactory;
-import com.checkaboy.deepequal.diff.array.strategy.IArrayDiffCollectionStrategy;
 
 import java.util.Collection;
 
@@ -28,7 +28,7 @@ public class ArrayDiffCollector<S, T>
 
         Collection<IDiffNode> diffs = strategy.collect(comparisonContext, diffNodeFactory, source, target, currentPath);
 
-        if (diffs.isEmpty()) return null;
+        if (diffs == null) return null;
         else {
             node.addChildren(diffs);
             return node;

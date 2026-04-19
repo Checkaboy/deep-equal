@@ -28,7 +28,7 @@ public class CollectionDiffCollector<SC extends Collection<SV>, SV, TC extends C
 
         Collection<IDiffNode> diffs = strategy.collect(comparisonContext, diffNodeFactory, source, target, currentPath);
 
-        if (diffs.isEmpty()) return null;
+        if (diffs == null) return null;
         else {
             node.addChildren(diffs);
             return node;
