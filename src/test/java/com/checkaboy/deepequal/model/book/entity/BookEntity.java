@@ -9,6 +9,20 @@ public class BookEntity {
     private String name;
     private AuthorEntity author;
 
+    public BookEntity() {
+    }
+
+    public BookEntity(Long id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
+    public BookEntity(Long id, String name, AuthorEntity author) {
+        this.id = id;
+        this.name = name;
+        this.author = author;
+    }
+
     public Long getId() {
         return id;
     }

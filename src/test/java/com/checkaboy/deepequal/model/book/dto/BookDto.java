@@ -9,6 +9,20 @@ public class BookDto {
     private String name;
     private AuthorDto author;
 
+    public BookDto() {
+    }
+
+    public BookDto(Long id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
+    public BookDto(Long id, String name, AuthorDto author) {
+        this.id = id;
+        this.name = name;
+        this.author = author;
+    }
+
     public Long getId() {
         return id;
     }

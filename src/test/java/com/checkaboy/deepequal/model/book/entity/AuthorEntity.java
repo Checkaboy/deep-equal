@@ -12,6 +12,22 @@ public class AuthorEntity {
     private String lastName;
     private List<BookEntity> books;
 
+    public AuthorEntity() {
+    }
+
+    public AuthorEntity(Long id, String firstName, String lastName) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
+
+    public AuthorEntity(Long id, String firstName, String lastName, List<BookEntity> books) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.books = books;
+    }
+
     public Long getId() {
         return id;
     }

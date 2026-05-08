@@ -15,6 +15,12 @@ public class AuthorDto {
     public AuthorDto() {
     }
 
+    public AuthorDto(Long id, String firstName, String lastName) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
+
     public AuthorDto(Long id, String firstName, String lastName, List<BookDto> books) {
         this.id = id;
         this.firstName = firstName;
