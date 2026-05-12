@@ -33,6 +33,16 @@ public class ComparisonContext
         return registry;
     }
 
+    @Override
+    public ComparisonPolicy policy() {
+        return null;
+    }
+
+    @Override
+    public ComparisonPath path() {
+        return null;
+    }
+
     public void pushPath(String node) {
         path.push(node);
     }

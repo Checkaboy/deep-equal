@@ -1,5 +1,9 @@
 package com.checkaboy.deepequal.context.cache;
 
+import com.checkaboy.deepequal.comparator.v2.ComparatorRegistry;
+import com.checkaboy.deepequal.comparator.v2.ComparisonPath;
+import com.checkaboy.deepequal.comparator.v2.ComparisonPolicy;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -22,6 +26,21 @@ public class ComparisonContext
     @Override
     public boolean enter(Object a, Object b) {
         return visited.add(new ComparisonPair(a, b));
+    }
+
+    @Override
+    public ComparatorRegistry registry() {
+        return null;
+    }
+
+    @Override
+    public ComparisonPolicy policy() {
+        return null;
+    }
+
+    @Override
+    public ComparisonPath path() {
+        return null;
     }
 
     public static class ComparisonPair {

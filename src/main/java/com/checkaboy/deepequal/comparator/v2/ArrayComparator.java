@@ -19,8 +19,7 @@ public class ArrayComparator<S, T>
     public boolean compare(IComparisonContext ctx, S[] source, T[] target) {
         if (source == null && target == null) return true;
         if (source == null || target == null || source.length != target.length) return false;
-        ComparisonContext context = (ComparisonContext) ctx;
-        IComparator<S, T> elementComparator = context.registry().resolve(sourceElementType, targetElementType, context);
+        IComparator<S, T> elementComparator = ctx.registry().resolve(sourceElementType, targetElementType, ctx);
         for (int i = 0; i < source.length; i++) {
             if (!elementComparator.compare(ctx, source[i], target[i])) return false;
         }
